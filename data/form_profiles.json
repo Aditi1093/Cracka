@@ -1,0 +1,61 @@
+{
+  "personal": {
+    "first_name": "",
+    "last_name": "",
+    "full_name": "",
+    "email": "",
+    "phone": "",
+    "mobile": "",
+    "dob": "",
+    "dob_day": "",
+    "dob_month": "",
+    "dob_year": "",
+    "gender": "",
+    "address": "",
+    "city": "",
+    "state": "",
+    "pincode": "",
+    "country": "India",
+    "aadhaar": "",
+    "pan": "",
+    "father_name": "",
+    "mother_name": "",
+    "nationality": "Indian"
+  },
+  "college": {
+    "college_name": "",
+    "university": "",
+    "course": "",
+    "branch": "",
+    "year": "",
+    "semester": "",
+    "roll_number": "",
+    "enrollment_no": "",
+    "cgpa": "",
+    "percentage": "",
+    "passing_year": ""
+  },
+  "job": {
+    "designation": "",
+    "company": "",
+    "experience": "",
+    "skills": "",
+    "linkedin": "",
+    "github": "",
+    "portfolio": "",
+    "salary_expected": "",
+    "notice_period": ""
+  },
+  "login": {
+    "username": "",
+    "password": "",
+    "confirm_password": ""
+  },
+  "shopping": {
+    "card_name": "",
+    "card_number": "",
+    "card_expiry": "",
+    "card_cvv": "",
+    "upi_id": ""
+  }
+}

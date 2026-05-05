@@ -1,0 +1,1452 @@
+[
+  {
+    "time": "2026-04-29 22:23:53",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "141.164.55.176",
+    "hostname": "141-164-55-176.lum-int.io",
+    "remote_port": 443,
+    "local_port": 58614,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 141.164.55.176"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:23:58",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "165.245.130.161",
+    "hostname": "165.245.130.161",
+    "remote_port": 443,
+    "local_port": 58615,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 165.245.130.161",
+      "No hostname resolved for 165.245.130.161 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:03",
+    "severity": "HIGH",
+    "process": "hp.hpx.exe",
+    "pid": 25564,
+    "remote_ip": "151.101.209.55",
+    "hostname": "151.101.209.55",
+    "remote_port": 443,
+    "local_port": 55309,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'hp.hpx.exe' connected to external 151.101.209.55",
+      "No hostname resolved for 151.101.209.55 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:08",
+    "severity": "HIGH",
+    "process": "systemsettings.exe",
+    "pid": 18044,
+    "remote_ip": "40.74.79.222",
+    "hostname": "40.74.79.222",
+    "remote_port": 443,
+    "local_port": 55332,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'systemsettings.exe' connected to external 40.74.79.222",
+      "No hostname resolved for 40.74.79.222 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:08",
+    "severity": "MEDIUM",
+    "process": "claude.exe",
+    "pid": 15168,
+    "remote_ip": "18.97.36.62",
+    "hostname": "ec2-18-97-36-62.compute-1.amazonaws.com",
+    "remote_port": 443,
+    "local_port": 55256,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'claude.exe' connected to external 18.97.36.62"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:18",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "20.189.173.11",
+    "hostname": "20.189.173.11",
+    "remote_port": 443,
+    "local_port": 55321,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 20.189.173.11",
+      "No hostname resolved for 20.189.173.11 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:23",
+    "severity": "HIGH",
+    "process": "ms-teams.exe",
+    "pid": 19800,
+    "remote_ip": "52.175.141.53",
+    "hostname": "52.175.141.53",
+    "remote_port": 443,
+    "local_port": 56689,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'ms-teams.exe' connected to external 52.175.141.53",
+      "No hostname resolved for 52.175.141.53 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:32",
+    "severity": "HIGH",
+    "process": "msedgewebview2.exe",
+    "pid": 10636,
+    "remote_ip": "52.168.112.67",
+    "hostname": "52.168.112.67",
+    "remote_port": 443,
+    "local_port": 64802,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' connected to external 52.168.112.67",
+      "No hostname resolved for 52.168.112.67 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:37",
+    "severity": "HIGH",
+    "process": "ms-teams.exe",
+    "pid": 19800,
+    "remote_ip": "52.123.173.206",
+    "hostname": "52.123.173.206",
+    "remote_port": 443,
+    "local_port": 61542,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'ms-teams.exe' connected to external 52.123.173.206",
+      "No hostname resolved for 52.123.173.206 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:42",
+    "severity": "HIGH",
+    "process": "filecoauth.exe",
+    "pid": 22764,
+    "remote_ip": "20.189.173.12",
+    "hostname": "20.189.173.12",
+    "remote_port": 443,
+    "local_port": 55338,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'filecoauth.exe' connected to external 20.189.173.12",
+      "No hostname resolved for 20.189.173.12 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:47",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "143.110.176.134",
+    "hostname": "143.110.176.134",
+    "remote_port": 443,
+    "local_port": 58613,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 143.110.176.134",
+      "No hostname resolved for 143.110.176.134 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:47",
+    "severity": "HIGH",
+    "process": "msedgewebview2.exe",
+    "pid": 10636,
+    "remote_ip": "2603:1040:f02:e::1ba",
+    "hostname": "2603:1040:f02:e::1ba",
+    "remote_port": 443,
+    "local_port": 62911,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' connected to external 2603:1040:f02:e::1ba",
+      "No hostname resolved for 2603:1040:f02:e::1ba (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:24:47",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "3.33.193.183",
+    "hostname": "a173c15f4de6c7caa.awsglobalaccelerator.com",
+    "remote_port": 443,
+    "local_port": 58602,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 3.33.193.183"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:35:55",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "141.164.55.176",
+    "hostname": "141-164-55-176.lum-int.io",
+    "remote_port": 443,
+    "local_port": 58614,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 141.164.55.176"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:00",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "165.245.130.161",
+    "hostname": "165.245.130.161",
+    "remote_port": 443,
+    "local_port": 58615,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 165.245.130.161",
+      "No hostname resolved for 165.245.130.161 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:05",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.76.162",
+    "hostname": "bom12s09-in-f2.1e100.net",
+    "remote_port": 443,
+    "local_port": 64375,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.76.162"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:09",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.70.78",
+    "hostname": "pnbomb-ab-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 64381,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.70.78"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:09",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.67.14",
+    "hostname": "lcboma-au-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 64376,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.67.14"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:14",
+    "severity": "MEDIUM",
+    "process": "claude.exe",
+    "pid": 15168,
+    "remote_ip": "18.97.36.62",
+    "hostname": "ec2-18-97-36-62.compute-1.amazonaws.com",
+    "remote_port": 443,
+    "local_port": 55256,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'claude.exe' connected to external 18.97.36.62"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:19",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "65.20.113.70",
+    "hostname": "65-20-113-70.lum-int.io",
+    "remote_port": 443,
+    "local_port": 53114,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 65.20.113.70"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:19",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.70.46",
+    "hostname": "pnbomb-aa-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 64387,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.70.46"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:28",
+    "severity": "HIGH",
+    "process": "msedgewebview2.exe",
+    "pid": 10636,
+    "remote_ip": "51.132.193.105",
+    "hostname": "51.132.193.105",
+    "remote_port": 443,
+    "local_port": 64372,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' connected to external 51.132.193.105",
+      "No hostname resolved for 51.132.193.105 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:33",
+    "severity": "HIGH",
+    "process": "hp.hpx.exe",
+    "pid": 25564,
+    "remote_ip": "151.101.209.55",
+    "hostname": "151.101.209.55",
+    "remote_port": 443,
+    "local_port": 57801,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'hp.hpx.exe' connected to external 151.101.209.55",
+      "No hostname resolved for 151.101.209.55 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:37",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "139.180.137.104",
+    "hostname": "139-180-137-104.lum-int.io",
+    "remote_port": 443,
+    "local_port": 53113,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 139.180.137.104"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:42",
+    "severity": "HIGH",
+    "process": "ms-teams.exe",
+    "pid": 19800,
+    "remote_ip": "52.175.141.53",
+    "hostname": "52.175.141.53",
+    "remote_port": 443,
+    "local_port": 56689,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'ms-teams.exe' connected to external 52.175.141.53",
+      "No hostname resolved for 52.175.141.53 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:42",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.67.14",
+    "hostname": "lcboma-au-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 64384,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.67.14"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:42",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.70.46",
+    "hostname": "pnbomb-aa-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 64380,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.70.46"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:47",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.10.97",
+    "hostname": "sd-in-f97.1e100.net",
+    "remote_port": 443,
+    "local_port": 52466,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.10.97"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:51",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "45.77.79.42",
+    "hostname": "45.77.79.42.vultrusercontent.com",
+    "remote_port": 443,
+    "local_port": 52468,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 45.77.79.42"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:52",
+    "severity": "HIGH",
+    "process": "claude.exe",
+    "pid": 15168,
+    "remote_ip": "2607:6bc0::10",
+    "hostname": "2607:6bc0::10",
+    "remote_port": 443,
+    "local_port": 57798,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'claude.exe' connected to external 2607:6bc0::10",
+      "No hostname resolved for 2607:6bc0::10 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:36:56",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.206.170",
+    "hostname": "lcboma-bg-in-f10.1e100.net",
+    "remote_port": 443,
+    "local_port": 64383,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.206.170"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:01",
+    "severity": "HIGH",
+    "process": "ms-teams.exe",
+    "pid": 19800,
+    "remote_ip": "52.123.173.206",
+    "hostname": "52.123.173.206",
+    "remote_port": 443,
+    "local_port": 61542,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'ms-teams.exe' connected to external 52.123.173.206",
+      "No hostname resolved for 52.123.173.206 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:06",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.154.119",
+    "hostname": "142.251.154.119",
+    "remote_port": 443,
+    "local_port": 64373,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.154.119",
+      "No hostname resolved for 142.251.154.119 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:06",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.206.170",
+    "hostname": "lcboma-bg-in-f10.1e100.net",
+    "remote_port": 443,
+    "local_port": 64386,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.206.170"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:06",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.67.14",
+    "hostname": "lcboma-au-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 64377,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.67.14"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:06",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.70.46",
+    "hostname": "pnbomb-aa-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 64385,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.70.46"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:10",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "143.110.176.134",
+    "hostname": "143.110.176.134",
+    "remote_port": 443,
+    "local_port": 58613,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 143.110.176.134",
+      "No hostname resolved for 143.110.176.134 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:15",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "3.33.193.183",
+    "hostname": "a173c15f4de6c7caa.awsglobalaccelerator.com",
+    "remote_port": 443,
+    "local_port": 53110,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 3.33.193.183"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:15",
+    "severity": "HIGH",
+    "process": "msedgewebview2.exe",
+    "pid": 10636,
+    "remote_ip": "2603:1040:f02:e::1ba",
+    "hostname": "2603:1040:f02:e::1ba",
+    "remote_port": 443,
+    "local_port": 62911,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' connected to external 2603:1040:f02:e::1ba",
+      "No hostname resolved for 2603:1040:f02:e::1ba (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:20",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.221.238",
+    "hostname": "pnbomb-bk-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 52463,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.221.238"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:20",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.10.97",
+    "hostname": "sd-in-f97.1e100.net",
+    "remote_port": 443,
+    "local_port": 52467,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.10.97"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:20",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.206.170",
+    "hostname": "lcboma-bg-in-f10.1e100.net",
+    "remote_port": 443,
+    "local_port": 64382,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.206.170"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:24",
+    "severity": "HIGH",
+    "process": "msedgewebview2.exe",
+    "pid": 10636,
+    "remote_ip": "51.132.193.105",
+    "hostname": "51.132.193.105",
+    "remote_port": 443,
+    "local_port": 57664,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' connected to external 51.132.193.105",
+      "No hostname resolved for 51.132.193.105 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:29",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "104.18.42.227",
+    "hostname": "104.18.42.227",
+    "remote_port": 443,
+    "local_port": 52469,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 104.18.42.227",
+      "No hostname resolved for 104.18.42.227 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:34",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 3480,
+    "remote_ip": "65.20.90.122",
+    "hostname": "65-20-90-122.lum-int.io",
+    "remote_port": 443,
+    "local_port": 53112,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 65.20.90.122"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:34",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.67.14",
+    "hostname": "lcboma-au-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 64379,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.67.14"
+    ]
+  },
+  {
+    "time": "2026-04-29 22:37:34",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.221.238",
+    "hostname": "pnbomb-bk-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 52464,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.221.238"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:54:59",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "108.159.46.77",
+    "hostname": "server-108-159-46-77.pnq50.r.cloudfront.net",
+    "remote_port": 443,
+    "local_port": 61160,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 108.159.46.77"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:05",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2404:6800:4000:1025::71",
+    "hostname": "lcbomp-in-f113.1e100.net",
+    "remote_port": 443,
+    "local_port": 53421,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2404:6800:4000:1025::71"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:10",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2404:6800:4000:1025::71",
+    "hostname": "lcbomp-in-f113.1e100.net",
+    "remote_port": 443,
+    "local_port": 55700,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2404:6800:4000:1025::71"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:16",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2606:4700:440a::ac40:98e9",
+    "hostname": "2606:4700:440a::ac40:98e9",
+    "remote_port": 443,
+    "local_port": 58057,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2606:4700:440a::ac40:98e9",
+      "No hostname resolved for 2606:4700:440a::ac40:98e9 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:16",
+    "severity": "MEDIUM",
+    "process": "claude.exe",
+    "pid": 11044,
+    "remote_ip": "18.97.36.78",
+    "hostname": "ec2-18-97-36-78.compute-1.amazonaws.com",
+    "remote_port": 443,
+    "local_port": 55533,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'claude.exe' connected to external 18.97.36.78"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:21",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2001:4860:4829:7700::",
+    "hostname": "2001:4860:4829:7700::",
+    "remote_port": 80,
+    "local_port": 57632,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2001:4860:4829:7700::",
+      "No hostname resolved for 2001:4860:4829:7700:: (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:22",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "3.33.193.183",
+    "hostname": "a173c15f4de6c7caa.awsglobalaccelerator.com",
+    "remote_port": 443,
+    "local_port": 50967,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 3.33.193.183"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:27",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "68.183.92.217",
+    "hostname": "68.183.92.217",
+    "remote_port": 443,
+    "local_port": 50969,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 68.183.92.217",
+      "No hostname resolved for 68.183.92.217 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:27",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2001:4860:4829:7700::",
+    "hostname": "2001:4860:4829:7700::",
+    "remote_port": 80,
+    "local_port": 58055,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2001:4860:4829:7700::",
+      "No hostname resolved for 2001:4860:4829:7700:: (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:33",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "20.190.146.36",
+    "hostname": "20.190.146.36",
+    "remote_port": 443,
+    "local_port": 49803,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 20.190.146.36",
+      "No hostname resolved for 20.190.146.36 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:48",
+    "severity": "HIGH",
+    "process": "ms-teams.exe",
+    "pid": 10820,
+    "remote_ip": "52.147.65.166",
+    "hostname": "52.147.65.166",
+    "remote_port": 443,
+    "local_port": 61996,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'ms-teams.exe' connected to external 52.147.65.166",
+      "No hostname resolved for 52.147.65.166 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:55:48",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2001:4860:4829:7700::",
+    "hostname": "2001:4860:4829:7700::",
+    "remote_port": 80,
+    "local_port": 57628,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2001:4860:4829:7700::",
+      "No hostname resolved for 2001:4860:4829:7700:: (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:56:09",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "82.145.213.8",
+    "hostname": "82.145.213.8",
+    "remote_port": 443,
+    "local_port": 57630,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 82.145.213.8",
+      "No hostname resolved for 82.145.213.8 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:56:25",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "162.243.16.230",
+    "hostname": "162.243.16.230",
+    "remote_port": 443,
+    "local_port": 50971,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 162.243.16.230",
+      "No hostname resolved for 162.243.16.230 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:56:34",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "68.183.92.217",
+    "hostname": "68.183.92.217",
+    "remote_port": 443,
+    "local_port": 58980,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 68.183.92.217",
+      "No hostname resolved for 68.183.92.217 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:56:45",
+    "severity": "HIGH",
+    "process": "msedgewebview2.exe",
+    "pid": 17540,
+    "remote_ip": "2603:1040:f02:e::1b2",
+    "hostname": "2603:1040:f02:e::1b2",
+    "remote_port": 443,
+    "local_port": 51343,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' connected to external 2603:1040:f02:e::1b2",
+      "No hostname resolved for 2603:1040:f02:e::1b2 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:57:01",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "45.76.159.41",
+    "hostname": "45.76.159.41",
+    "remote_port": 443,
+    "local_port": 50974,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 45.76.159.41",
+      "No hostname resolved for 45.76.159.41 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:57:06",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "20.190.146.36",
+    "hostname": "20.190.146.36",
+    "remote_port": 443,
+    "local_port": 56011,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 20.190.146.36",
+      "No hostname resolved for 20.190.146.36 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:57:16",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "45.76.159.41",
+    "hostname": "45-76-159-41.lum-int.io",
+    "remote_port": 443,
+    "local_port": 58982,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 45.76.159.41"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:57:21",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2001:4860:4829:7700::",
+    "hostname": "2001:4860:4829:7700::",
+    "remote_port": 80,
+    "local_port": 50853,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2001:4860:4829:7700::",
+      "No hostname resolved for 2001:4860:4829:7700:: (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:57:21",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2603:1046:a00:1d::",
+    "hostname": "2603:1046:a00:1d::",
+    "remote_port": 443,
+    "local_port": 61886,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2603:1046:a00:1d::",
+      "No hostname resolved for 2603:1046:a00:1d:: (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:57:27",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "45.77.79.42",
+    "hostname": "45.77.79.42.vultrusercontent.com",
+    "remote_port": 443,
+    "local_port": 58056,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 45.77.79.42"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:57:27",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2001:4860:4829:7700::",
+    "hostname": "2001:4860:4829:7700::",
+    "remote_port": 80,
+    "local_port": 53738,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2001:4860:4829:7700::",
+      "No hostname resolved for 2001:4860:4829:7700:: (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:59:51",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "192.178.211.97",
+    "hostname": "lcbomp-in-f97.1e100.net",
+    "remote_port": 443,
+    "local_port": 51398,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 192.178.211.97"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:59:51",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "192.178.211.97",
+    "hostname": "lcbomp-in-f97.1e100.net",
+    "remote_port": 443,
+    "local_port": 51401,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 192.178.211.97"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:59:57",
+    "severity": "MEDIUM",
+    "process": "hp-one-agent-service.exe",
+    "pid": 19852,
+    "remote_ip": "3.208.237.11",
+    "hostname": "ec2-3-208-237-11.compute-1.amazonaws.com",
+    "remote_port": 443,
+    "local_port": 49239,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'hp-one-agent-service.exe' connected to external 3.208.237.11"
+    ]
+  },
+  {
+    "time": "2026-05-02 11:59:57",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.220.46",
+    "hostname": "hkg07s50-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 51411,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.220.46"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:02",
+    "severity": "MEDIUM",
+    "process": "claude.exe",
+    "pid": 11044,
+    "remote_ip": "18.97.36.69",
+    "hostname": "ec2-18-97-36-69.compute-1.amazonaws.com",
+    "remote_port": 443,
+    "local_port": 55288,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'claude.exe' connected to external 18.97.36.69"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:07",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.250.206.110",
+    "hostname": "lcboma-az-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 51406,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.250.206.110"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:11",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "162.243.16.230",
+    "hostname": "162.243.16.230",
+    "remote_port": 443,
+    "local_port": 49242,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 162.243.16.230",
+      "No hostname resolved for 162.243.16.230 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:16",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "68.183.92.217",
+    "hostname": "68.183.92.217",
+    "remote_port": 443,
+    "local_port": 50969,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 68.183.92.217",
+      "No hostname resolved for 68.183.92.217 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:16",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.43.14",
+    "hostname": "pnbomb-bo-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 51403,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.43.14"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:17",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.220.34",
+    "hostname": "pnbomb-ba-in-f2.1e100.net",
+    "remote_port": 443,
+    "local_port": 51397,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.220.34"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:22",
+    "severity": "HIGH",
+    "process": "ms-teams.exe",
+    "pid": 10820,
+    "remote_ip": "52.168.112.67",
+    "hostname": "52.168.112.67",
+    "remote_port": 443,
+    "local_port": 58075,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'ms-teams.exe' connected to external 52.168.112.67",
+      "No hostname resolved for 52.168.112.67 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:24",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2001:4860:4829:7700::",
+    "hostname": "2001:4860:4829:7700::",
+    "remote_port": 80,
+    "local_port": 58067,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2001:4860:4829:7700::",
+      "No hostname resolved for 2001:4860:4829:7700:: (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:29",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2001:4860:4826:7700::",
+    "hostname": "2001:4860:4826:7700::",
+    "remote_port": 80,
+    "local_port": 51410,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 2001:4860:4826:7700::",
+      "No hostname resolved for 2001:4860:4826:7700:: (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:29",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "45.76.159.41",
+    "hostname": "45-76-159-41.lum-int.io",
+    "remote_port": 443,
+    "local_port": 49241,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 45.76.159.41"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:34",
+    "severity": "HIGH",
+    "process": "msedgewebview2.exe",
+    "pid": 17540,
+    "remote_ip": "13.89.179.9",
+    "hostname": "13.89.179.9",
+    "remote_port": 443,
+    "local_port": 49237,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' connected to external 13.89.179.9",
+      "No hostname resolved for 13.89.179.9 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:39",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.151.119",
+    "hostname": "142.251.151.119",
+    "remote_port": 443,
+    "local_port": 51395,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.151.119",
+      "No hostname resolved for 142.251.151.119 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:43",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "68.183.92.217",
+    "hostname": "68.183.92.217",
+    "remote_port": 443,
+    "local_port": 49240,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 68.183.92.217",
+      "No hostname resolved for 68.183.92.217 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:44",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.222.106",
+    "hostname": "pnbomb-az-in-f10.1e100.net",
+    "remote_port": 443,
+    "local_port": 51402,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.222.106"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:49",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "45.77.79.42",
+    "hostname": "45.77.79.42.vultrusercontent.com",
+    "remote_port": 443,
+    "local_port": 58984,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 45.77.79.42"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:49",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.220.46",
+    "hostname": "hkg07s50-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 51412,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.220.46"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:49",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "192.178.211.97",
+    "hostname": "lcbomp-in-f97.1e100.net",
+    "remote_port": 443,
+    "local_port": 51404,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 192.178.211.97"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:54",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "20.44.10.123",
+    "hostname": "20.44.10.123",
+    "remote_port": 443,
+    "local_port": 60811,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 20.44.10.123",
+      "No hostname resolved for 20.44.10.123 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:00:54",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "45.76.159.41",
+    "hostname": "45-76-159-41.lum-int.io",
+    "remote_port": 443,
+    "local_port": 50974,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 45.76.159.41"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:01:03",
+    "severity": "HIGH",
+    "process": "msedgewebview2.exe",
+    "pid": 17540,
+    "remote_ip": "20.249.168.121",
+    "hostname": "20.249.168.121",
+    "remote_port": 443,
+    "local_port": 58020,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' connected to external 20.249.168.121",
+      "No hostname resolved for 20.249.168.121 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:01:08",
+    "severity": "HIGH",
+    "process": "msedgewebview2.exe",
+    "pid": 17540,
+    "remote_ip": "2603:1040:603:c::d5",
+    "hostname": "2603:1040:603:c::d5",
+    "remote_port": 443,
+    "local_port": 49754,
+    "status": "CLOSE_WAIT",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' connected to external 2603:1040:603:c::d5",
+      "No hostname resolved for 2603:1040:603:c::d5 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:01:13",
+    "severity": "HIGH",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "145.239.63.98",
+    "hostname": "145.239.63.98",
+    "remote_port": 443,
+    "local_port": 51414,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 145.239.63.98",
+      "No hostname resolved for 145.239.63.98 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:01:13",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.43.14",
+    "hostname": "pnbomb-bo-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 51405,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.43.14"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:01:23",
+    "severity": "HIGH",
+    "process": "ms-teams.exe",
+    "pid": 10820,
+    "remote_ip": "52.147.65.166",
+    "hostname": "52.147.65.166",
+    "remote_port": 443,
+    "local_port": 58078,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'ms-teams.exe' connected to external 52.147.65.166",
+      "No hostname resolved for 52.147.65.166 (raw IP \u2014 suspicious)"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:01:23",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "142.251.43.14",
+    "hostname": "pnbomb-bo-in-f14.1e100.net",
+    "remote_port": 443,
+    "local_port": 51407,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' connected to external 142.251.43.14"
+    ]
+  },
+  {
+    "time": "2026-05-02 12:01:23",
+    "severity": "MEDIUM",
+    "process": "net_updater32.exe",
+    "pid": 5552,
+    "remote_ip": "15.197.193.114",
+    "hostname": "a173c15f4de6c7caa.awsglobalaccelerator.com",
+    "remote_port": 443,
+    "local_port": 55290,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'net_updater32.exe' connected to external 15.197.193.114"
+    ]
+  }
+]

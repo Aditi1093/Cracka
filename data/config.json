@@ -1,0 +1,79 @@
+{
+  "_readme": "Cracka AI v3.0 - Configuration File. Apni API keys yahan daalo. config.json ko kabhi GitHub par mat daalo!",
+  "assistant": {
+    "name": "Cracka",
+    "boss_name": "Aditi",
+    "wake_words": [
+      "cracka",
+      "mj",
+      "baby",
+      "jarvis",
+      "hey jarvis"
+    ],
+    "language": "en-IN",
+    "voice_speed": 160,
+    "voice_volume": 1.0,
+    "response_length": "short",
+    "hinglish_mode": true
+  },
+  "ai_model": {
+    "primary": "ollama",
+    "ollama_model": "phi3",
+    "ollama_url": "http://127.0.0.1:11434",
+    "groq_api_key": "GROQ_KEY_YAHAN_DAALO",
+    "groq_model": "llama3-8b-8192",
+    "max_history": 20,
+    "temperature": 0.4,
+    "max_tokens": 300
+  },
+  "apis": {
+    "openweather_key": "OPENWEATHER_KEY_YAHAN_DAALO",
+    "newsapi_key": "NEWSAPI_KEY_YAHAN_DAALO",
+    "picovoice_key": "PICOVOICE_KEY_YAHAN_DAALO"
+  },
+  "google": {
+    "credentials_file": "data/credentials.json",
+    "gmail_token": "data/gmail_token.json",
+    "calendar_token": "data/calendar_token.json",
+    "timezone": "Asia/Kolkata"
+  },
+  "security": {
+    "face_recognition_enabled": true,
+    "boss_photo": "data/boss.jpg",
+    "face_tolerance": 0.5,
+    "login_required": false
+  },
+  "network_monitor": {
+    "auto_start": false,
+    "scan_interval_seconds": 30,
+    "alert_on_threat": true,
+    "log_file": "data/network_log.json"
+  },
+  "paths": {
+    "memory_file": "data/memory.json",
+    "learning_file": "data/cracka_learning.json",
+    "chat_history": "data/chat_history.json",
+    "screenshots": "data/screenshots",
+    "logs": "data/logs",
+    "vosk_model": "models/vosk-model-small-en-us"
+  },
+  "gui": {
+    "window_width": 560,
+    "window_height": 780,
+    "theme": "dark",
+    "show_waveform": true,
+    "animation_fps": 30
+  },
+  "features": {
+    "voice_enabled": true,
+    "wake_word_enabled": true,
+    "gmail_enabled": false,
+    "calendar_enabled": false,
+    "network_monitor": true,
+    "face_recognition": true,
+    "offline_voice": false,
+    "form_filler": true,
+    "code_reviewer": true,
+    "mobile_control_adb": false
+  }
+}

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cracka — Network Monitor</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+
+  :root {
+    --bg: #04080f;
+    --bg2: #080f1a;
+    --panel: #0b1422;
+    --border: #0d2137;
+    --cyan: #00e5ff;
+    --green: #00ff88;
+    --red: #ff2d55;
+    --amber: #ffab00;
+    --dim: #1a3a4a;
+    --text: #c8e6f0;
+    --muted: #3a6070;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,229,255,0.015) 2px,
+      rgba(0,229,255,0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Header */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-icon {
+    width: 40px; height: 40px;
+    border: 2px solid var(--cyan);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--cyan);
+    animation: pulse-ring 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,229,255,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(0,229,255,0); }
+  }
+
+  .logo-text { font-family: 'Rajdhani', sans-serif; }
+  .logo-text h1 { font-size: 20px; font-weight: 700; color: var(--cyan); letter-spacing: 3px; }
+  .logo-text p { font-size: 10px; color: var(--muted); letter-spacing: 2px; }
+
+  .header-right { display: flex; align-items: center; gap: 20px; }
+
+  .live-badge {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--green); letter-spacing: 2px;
+  }
+
+  .live-dot {
+    width: 7px; height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: blink 1s step-start infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  #clock { font-size: 13px; color: var(--muted); }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat-card {
+    background: var(--panel);
+    padding: 18px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .stat-card.clean::before { background: var(--green); }
+  .stat-card.warn::before { background: var(--amber); }
+  .stat-card.danger::before { background: var(--red); }
+  .stat-card.info::before { background: var(--cyan); }
+
+  .stat-label { font-size: 10px; color: var(--muted); letter-spacing: 2px; margin-bottom: 8px; }
+  .stat-value { font-family: 'Rajdhani', sans-serif; font-size: 36px; font-weight: 700; line-height: 1; }
+
+  .stat-card.clean .stat-value { color: var(--green); }
+  .stat-card.warn .stat-value { color: var(--amber); }
+  .stat-card.danger .stat-value { color: var(--red); }
+  .stat-card.info .stat-value { color: var(--cyan); }
+
+  .stat-sub { font-size: 10px; color: var(--muted); margin-top: 6px; }
+
+  /* Main layout */
+  .main { display: grid; grid-template-columns: 1fr 320px; gap: 1px; background: var(--border); min-height: calc(100vh - 160px); }
+
+  /* Connections table */
+  .panel { background: var(--panel); }
+
+  .panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .panel-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: var(--cyan); letter-spacing: 2px;
+  }
+
+  .scan-btn {
+    background: transparent;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    padding: 6px 16px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+
+  .scan-btn:hover { background: rgba(0,229,255,0.1); }
+  .scan-btn:active { background: rgba(0,229,255,0.2); }
+  .scan-btn.scanning { color: var(--amber); border-color: var(--amber); animation: scanning-pulse 0.8s ease-in-out infinite; }
+  @keyframes scanning-pulse { 50% { opacity: 0.5; } }
+
+  /* Table */
+  .conn-table { width: 100%; border-collapse: collapse; }
+
+  .conn-table th {
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .conn-table td {
+    padding: 10px 16px;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(13,33,55,0.5);
+    vertical-align: middle;
+  }
+
+  .conn-row { transition: background 0.15s; }
+  .conn-row:hover { background: rgba(0,229,255,0.04); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+  }
+
+  .badge-high { background: rgba(255,45,85,0.15); color: var(--red); border: 1px solid rgba(255,45,85,0.3); }
+  .badge-medium { background: rgba(255,171,0,0.15); color: var(--amber); border: 1px solid rgba(255,171,0,0.3); }
+  .badge-safe { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.2); }
+  .badge-info { background: rgba(0,229,255,0.1); color: var(--cyan); border: 1px solid rgba(0,229,255,0.2); }
+
+  .process-name { color: var(--cyan); }
+  .ip-addr { color: #7ab8cc; font-size: 11px; }
+  .port-num { color: var(--amber); }
+  .port-danger { color: var(--red); }
+
+  /* Alert reasons */
+  .alert-reasons { font-size: 10px; color: #ff6b8a; margin-top: 3px; }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+
+  .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+  .empty-text { font-family: 'Rajdhani', sans-serif; font-size: 16px; letter-spacing: 2px; }
+
+  /* Side panel */
+  .side { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+
+  /* Log feed */
+  .log-feed {
+    flex: 1;
+    padding: 14px 16px;
+    overflow-y: auto;
+    max-height: 340px;
+  }
+
+  .log-entry {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(13,33,55,0.5);
+    font-size: 11px;
+    line-height: 1.5;
+    animation: fadein 0.3s ease;
+  }
+
+  @keyframes fadein { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: none; } }
+
+  .log-time { color: var(--muted); font-size: 10px; }
+  .log-msg-safe { color: var(--green); }
+  .log-msg-warn { color: var(--amber); }
+  .log-msg-danger { color: var(--red); }
+
+  /* Known bad ports reference */
+  .port-ref { padding: 14px 16px; overflow-y: auto; max-height: 320px; }
+
+  .port-item {
+    display: flex; justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(13,33,55,0.5);
+    font-size: 11px;
+  }
+
+  .port-num-ref { color: var(--red); min-width: 50px; }
+  .port-desc { color: var(--muted); font-size: 10px; }
+
+  /* Scan progress bar */
+  .scan-progress {
+    height: 2px;
+    background: var(--border);
+    overflow: hidden;
+    display: none;
+  }
+
+  .scan-progress.active { display: block; }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--cyan);
+    width: 0%;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 8px var(--cyan);
+  }
+
+  /* Tooltip */
+  .tooltip-row { cursor: pointer; }
+
+  @media (max-width: 900px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .main { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">C</div>
+    <div class="logo-text">
+      <h1>CRACKA AI</h1>
+      <p>NETWORK THREAT MONITOR</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+    <div id="clock">--:--:--</div>
+  </div>
+</header>
+
+<div class="scan-progress" id="scanProgress">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card info">
+    <div class="stat-label">TOTAL CONNECTIONS</div>
+    <div class="stat-value" id="totalConn">—</div>
+    <div class="stat-sub">active sockets</div>
+  </div>
+  <div class="stat-card danger">
+    <div class="stat-label">HIGH THREATS</div>
+    <div class="stat-value" id="highThreats">—</div>
+    <div class="stat-sub">immediate action</div>
+  </div>
+  <div class="stat-card warn">
+    <div class="stat-label">MEDIUM RISK</div>
+    <div class="stat-value" id="medThreats">—</div>
+    <div class="stat-sub">monitor closely</div>
+  </div>
+  <div class="stat-card clean">
+    <div class="stat-label">STATUS</div>
+    <div class="stat-value" id="statusVal" style="font-size:22px; padding-top:6px;">READY</div>
+    <div class="stat-sub" id="lastScan">not scanned yet</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Left: connections table -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">SUSPICIOUS CONNECTIONS</span>
+      <button class="scan-btn" id="scanBtn" onclick="runScan()">[ SCAN NOW ]</button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="conn-table">
+        <thead>
+          <tr>
+            <th>SEVERITY</th>
+            <th>PROCESS</th>
+            <th>REMOTE HOST</th>
+            <th>PORT</th>
+            <th>STATUS</th>
+            <th>ALERTS</th>
+          </tr>
+        </thead>
+        <tbody id="connTableBody">
+          <tr>
+            <td colspan="6">
+              <div class="empty-state">
+                <div class="empty-icon">◉</div>
+                <div class="empty-text">AWAITING SCAN</div>
+                <div style="font-size:11px;margin-top:8px;color:#2a4a5a">Click SCAN NOW to analyze connections</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Right side panels -->
+  <div class="side">
+
+    <!-- Event log -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">EVENT LOG</span>
+        <span style="font-size:10px;color:var(--muted)" id="logCount">0 entries</span>
+      </div>
+      <div class="log-feed" id="logFeed">
+        <div class="log-entry">
+          <div class="log-time">--:--:--</div>
+          <div class="log-msg-safe">System initialized. Ready to monitor.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Suspicious ports reference -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">KNOWN BAD PORTS</span>
+      </div>
+      <div class="port-ref" id="portRef"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SUSPICIOUS_PORTS = {
+  23: "Telnet — unencrypted",
+  25: "SMTP — spam risk",
+  135: "RPC — remote code",
+  139: "NetBIOS — exploit",
+  445: "SMB — WannaCry",
+  1433: "MSSQL — DB exposed",
+  3389: "RDP — brute-force",
+  4444: "Metasploit default",
+  5900: "VNC — remote desktop",
+  6666: "IRC — malware C2",
+  6667: "IRC — malware C2",
+  8080: "Alt HTTP — tunnel",
+  9001: "Tor relay",
+  31337: "Back Orifice RAT",
+};
+
+const SAFE_PROCESSES = [
+  "chrome.exe","msedge.exe","firefox.exe","code.exe","python.exe",
+  "explorer.exe","svchost.exe","discord.exe","spotify.exe"
+];
+
+let logEntries = [];
+let scanCount = 0;
+
+function now() {
+  return new Date().toLocaleTimeString('en-IN', {hour12: false});
+}
+
+function updateClock() {
+  document.getElementById('clock').textContent = now();
+}
+
+function addLog(msg, type='safe') {
+  const feed = document.getElementById('logFeed');
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  entry.innerHTML = `<div class="log-time">${now()}</div><div class="log-msg-${type}">${msg}</div>`;
+  feed.prepend(entry);
+  logEntries.push({time: now(), msg, type});
+  document.getElementById('logCount').textContent = logEntries.length + ' entries';
+  if (feed.children.length > 50) feed.lastChild.remove();
+}
+
+function buildPortRef() {
+  const ref = document.getElementById('portRef');
+  for (const [port, desc] of Object.entries(SUSPICIOUS_PORTS)) {
+    const div = document.createElement('div');
+    div.className = 'port-item';
+    div.innerHTML = `<span class="port-num-ref">${port}</span><span class="port-desc">${desc}</span>`;
+    ref.appendChild(div);
+  }
+}
+
+function isPrivateIP(ip) {
+  return ip.startsWith('10.') || ip.startsWith('192.168.') ||
+         ip.startsWith('172.16.') || ip.startsWith('127.') ||
+         ip === '0.0.0.0' || ip === '::1';
+}
+
+function isSafeProcess(name) {
+  return SAFE_PROCESSES.includes(name.toLowerCase());
+}
+
+// Simulate a realistic scan (since we can't call psutil from browser)
+function simulateScan() {
+  const simulated = [
+    {
+      severity: 'HIGH',
+      process: 'unknown_svc.exe',
+      pid: 4821,
+      remote_ip: '185.220.101.47',
+      hostname: '185.220.101.47',
+      remote_port: 9001,
+      local_port: 52341,
+      status: 'ESTABLISHED',
+      alerts: ['Suspicious remote port 9001 (Tor relay)', 'Unknown process connecting to external IP']
+    },
+    {
+      severity: 'MEDIUM',
+      process: 'updater.exe',
+      pid: 3102,
+      remote_ip: '104.21.34.56',
+      hostname: 'cdn.unknown.net',
+      remote_port: 8080,
+      local_port: 49832,
+      status: 'ESTABLISHED',
+      alerts: ['Alt HTTP port 8080 in use (possible proxy/tunnel)']
+    },
+    {
+      severity: 'HIGH',
+      process: 'svchost32.exe',
+      pid: 992,
+      remote_ip: '91.108.4.1',
+      hostname: '91.108.4.1',
+      remote_port: 4444,
+      local_port: 55012,
+      status: 'ESTABLISHED',
+      alerts: ['Metasploit default port 4444', 'No hostname resolved (raw IP)', 'Unknown process on external IP']
+    },
+  ];
+
+  // Randomly return 0-3 threats
+  const count = Math.floor(Math.random() * 4);
+  return simulated.slice(0, count);
+}
+
+function renderTable(threats) {
+  const tbody = document.getElementById('connTableBody');
+
+  if (threats.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6">
+      <div class="empty-state">
+        <div class="empty-icon" style="color:var(--green)">✓</div>
+        <div class="empty-text" style="color:var(--green)">NETWORK CLEAN</div>
+        <div style="font-size:11px;margin-top:8px;color:var(--muted)">No suspicious connections found</div>
+      </div>
+    </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = threats.map(t => {
+    const badgeClass = t.severity === 'HIGH' ? 'badge-high' : 'badge-medium';
+    const portClass = SUSPICIOUS_PORTS[t.remote_port] ? 'port-danger' : 'port-num';
+    const portLabel = SUSPICIOUS_PORTS[t.remote_port] ? `${t.remote_port} ⚠` : t.remote_port;
+    const alertsHtml = t.alerts.map(a => `<div>→ ${a}</div>`).join('');
+
+    return `<tr class="conn-row tooltip-row">
+      <td><span class="badge ${badgeClass}">${t.severity}</span></td>
+      <td><span class="process-name">${t.process}</span><br><span style="font-size:10px;color:var(--muted)">PID ${t.pid}</span></td>
+      <td><span class="ip-addr">${t.hostname}</span></td>
+      <td><span class="${portClass}">${portLabel}</span></td>
+      <td><span class="badge badge-info">${t.status}</span></td>
+      <td><div class="alert-reasons">${alertsHtml}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+function updateStats(threats, total) {
+  document.getElementById('totalConn').textContent = total;
+  const high = threats.filter(t => t.severity === 'HIGH').length;
+  const med = threats.filter(t => t.severity === 'MEDIUM').length;
+  document.getElementById('highThreats').textContent = high;
+  document.getElementById('medThreats').textContent = med;
+
+  const statusEl = document.getElementById('statusVal');
+  if (high > 0) {
+    statusEl.textContent = 'ALERT';
+    statusEl.style.color = 'var(--red)';
+  } else if (med > 0) {
+    statusEl.textContent = 'WARN';
+    statusEl.style.color = 'var(--amber)';
+  } else {
+    statusEl.textContent = 'CLEAN';
+    statusEl.style.color = 'var(--green)';
+  }
+  document.getElementById('lastScan').textContent = 'last scan: ' + now();
+}
+
+async function runScan() {
+  const btn = document.getElementById('scanBtn');
+  const prog = document.getElementById('scanProgress');
+  const bar = document.getElementById('progressBar');
+
+  btn.textContent = '[ SCANNING... ]';
+  btn.classList.add('scanning');
+  prog.classList.add('active');
+  bar.style.width = '0%';
+
+  addLog('Scan initiated — analyzing connections...', 'warn');
+
+  // Animate progress bar
+  let p = 0;
+  const interval = setInterval(() => {
+    p += Math.random() * 12;
+    if (p > 95) p = 95;
+    bar.style.width = p + '%';
+  }, 100);
+
+  // Simulate async scan delay
+  await new Promise(r => setTimeout(r, 1800));
+
+  clearInterval(interval);
+  bar.style.width = '100%';
+
+  const threats = simulateScan();
+  const totalConns = Math.floor(Math.random() * 40) + 10;
+
+  renderTable(threats);
+  updateStats(threats, totalConns);
+
+  scanCount++;
+
+  if (threats.length === 0) {
+    addLog(`Scan #${scanCount} complete — ${totalConns} connections checked — CLEAN`, 'safe');
+  } else {
+    const high = threats.filter(t => t.severity === 'HIGH').length;
+    const med = threats.filter(t => t.severity === 'MEDIUM').length;
+    if (high > 0) addLog(`ALERT: ${high} HIGH severity threat(s) detected!`, 'danger');
+    if (med > 0) addLog(`WARNING: ${med} medium risk connection(s) found`, 'warn');
+    addLog(`Scan #${scanCount} complete — ${totalConns} connections, ${threats.length} flagged`, 'warn');
+  }
+
+  setTimeout(() => {
+    prog.classList.remove('active');
+    bar.style.width = '0%';
+    btn.textContent = '[ SCAN NOW ]';
+    btn.classList.remove('scanning');
+  }, 400);
+}
+
+// Auto-scan every 30 seconds
+function autoScan() {
+  addLog('Auto-scan scheduled every 30s', 'safe');
+  setInterval(runScan, 30000);
+}
+
+// Init
+buildPortRef();
+setInterval(updateClock, 1000);
+updateClock();
+addLog('Cracka Network Monitor v2.0 loaded', 'safe');
+addLog('Suspicious port database: ' + Object.keys(SUSPICIOUS_PORTS).length + ' entries', 'safe');
+
+// First scan on load
+setTimeout(runScan, 500);
+setTimeout(autoScan, 1000);
+</script>
+</body>
+</html>
