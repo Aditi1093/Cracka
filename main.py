@@ -10,15 +10,14 @@ import threading
 import sys
 import os
 
-# Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# ── PyQt5 app SABSE PEHLE banana padta hai ───────────────────────────────────
+# ── PyQt5 SABSE PEHLE ────────────────────────────────────────────────────────
 from PyQt5.QtWidgets import QApplication
 app = QApplication(sys.argv)
 app.setQuitOnLastWindowClosed(False)
 
-# ── Ab baaki imports ──────────────────────────────────────────────────────────
+# ── Baaki imports ─────────────────────────────────────────────────────────────
 from core.voice_engine import speak
 from core.listener import listen
 from core.ai_brain import process
@@ -28,7 +27,7 @@ from gui import CrackaGUI
 from memory.session_memory import SessionMemory
 from intelligence.learning_system import learn_command
 
-# Memory — safe fallback agar naya memory_manager nahi hai
+# Memory — safe fallback
 try:
     from memory.memory_manager import (
         auto_detect_and_save,
@@ -43,6 +42,15 @@ except ImportError:
 # ── Global objects ────────────────────────────────────────────────────────────
 gui     = CrackaGUI()
 session = SessionMemory()
+
+# ── FIX 1: Network monitor ko GUI se connect karo ────────────────────────────
+try:
+    from security_scan.network_monitor import set_gui, auto_start_if_enabled
+    set_gui(gui)                  # GUI popup alerts ke liye
+    auto_start_if_enabled()       # config mein ON hai toh auto-start
+    log_info("Network monitor connected to GUI")
+except Exception as e:
+    log_error(f"Network monitor setup error: {e}")
 
 
 # ── Assistant main loop ───────────────────────────────────────────────────────
@@ -109,15 +117,12 @@ def wake_word_loop():
 def start():
     log_info("Cracka AI v3.0 starting...")
 
-    # Wake word background thread
     t = threading.Thread(target=wake_word_loop, daemon=True)
     t.start()
 
-    # GUI dikhao
     gui.show()
     gui.run()
 
-    # Qt event loop — X dabane par band ho jaata hai
     try:
         exit_code = app.exec_()
     except KeyboardInterrupt:

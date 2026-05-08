@@ -49,6 +49,18 @@
     "alert_on_threat": true,
     "log_file": "data/network_log.json"
   },
+  "features": {
+    "voice_enabled": true,
+    "wake_word_enabled": true,
+    "gmail_enabled": false,
+    "calendar_enabled": false,
+    "network_monitor": true,
+    "face_recognition": true,
+    "offline_voice": false,
+    "form_filler": true,
+    "code_reviewer": true,
+    "mobile_control_adb": false
+  },
   "paths": {
     "memory_file": "data/memory.json",
     "learning_file": "data/cracka_learning.json",
@@ -63,17 +75,5 @@
     "theme": "dark",
     "show_waveform": true,
     "animation_fps": 30
-  },
-  "features": {
-    "voice_enabled": true,
-    "wake_word_enabled": true,
-    "gmail_enabled": false,
-    "calendar_enabled": false,
-    "network_monitor": true,
-    "face_recognition": true,
-    "offline_voice": false,
-    "form_filler": true,
-    "code_reviewer": true,
-    "mobile_control_adb": false
   }
 }

@@ -1,69 +1,135 @@
 """
 security/face_recognition_system.py
-Face recognition for Boss authentication.
-Uses face_recognition + OpenCV.
+Uses ONLY OpenCV — No MediaPipe, No dlib, No TensorFlow!
 """
 
 import cv2
-import face_recognition
 import os
+import json
 import numpy as np
-from core.logger import log_info, log_error
+from datetime import datetime
 
-BOSS_PHOTO = "data/boss.jpg"
-KNOWN_FACES_DIR = "data/known_faces"
+try:
+    from core.logger import log_info, log_error
+except:
+    def log_info(x): print(f"[INFO] {x}")
+    def log_error(x): print(f"[ERROR] {x}")
+
+BOSS_PHOTO     = "data/boss.jpg"
+BOSS_DATA_FILE = "data/boss_face_data.json"
+os.makedirs("data", exist_ok=True)
+
+CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+face_cascade = cv2.CascadeClassifier(CASCADE_PATH)
 
 
-def register_boss_face() -> str:
-    """
-    Capture Boss's face from webcam and save it.
-    Run this once to set up face recognition.
-    """
+def _detect_faces(frame):
+    gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(
+        gray, scaleFactor=1.1, minNeighbors=5, minSize=(80, 80)
+    )
+    return faces, gray
+
+
+def _get_embedding(frame, x, y, w, h):
+    gray     = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    face_roi = gray[y:y+h, x:x+w]
+    face_roi = cv2.resize(face_roi, (128, 128))
+    face_roi = cv2.equalizeHist(face_roi)
+    return face_roi.flatten().astype(np.float32)
+
+
+def _compare(saved_emb, current_emb):
+    try:
+        a1 = np.array(saved_emb,   dtype=np.float32)
+        a2 = np.array(current_emb, dtype=np.float32)
+        a1 = a1 / (np.linalg.norm(a1) + 1e-8)
+        a2 = a2 / (np.linalg.norm(a2) + 1e-8)
+        dist  = float(np.linalg.norm(a1 - a2))
+        conf  = max(0.0, round((1.0 - dist) * 100, 1))
+        match = dist < 0.35
+        return match, conf
+    except Exception as e:
+        log_error(f"Compare error: {e}")
+        return False, 0.0
+
+
+def register_boss_face():
+    try:
+        from core.voice_engine import speak
+    except:
+        def speak(x): print(f"Cracka: {x}")
+
+    speak("Look at the camera Boss. Capturing in 3 seconds.")
+
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
         return "Camera not available Boss."
 
-    os.makedirs("data", exist_ok=True)
-    from core.voice_engine import speak
-    speak("Look at the camera Boss. I'll capture your face in 3 seconds.")
-
     import time
-    time.sleep(3)
+    time.sleep(2)
 
-    ret, frame = cap.read()
+    best_frame = None
+    best_faces = []
+    start      = time.time()
+
+    while time.time() - start < 8:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        faces, _ = _detect_faces(frame)
+
+        if len(faces) > 0:
+            best_frame = frame.copy()
+            best_faces = list(faces)
+            for (x, y, w, h) in faces:
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+                cv2.putText(frame, "Hold still...", (x, y-10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+        else:
+            cv2.putText(frame, "Looking for face...", (10, 30),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 165, 255), 2)
+
+        cv2.imshow("Cracka - Register Face", frame)
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+
     cap.release()
+    cv2.destroyAllWindows()
 
-    if not ret:
-        return "Could not capture image Boss."
+    if best_frame is None or len(best_faces) == 0:
+        return "No face detected Boss. Try again with better lighting."
 
-    # Check if a face is in the photo
-    rgb = frame[:, :, ::-1]
-    encodings = face_recognition.face_encodings(rgb)
-    if not encodings:
-        return "No face detected in frame Boss. Please try again with better lighting."
+    cv2.imwrite(BOSS_PHOTO, best_frame)
 
-    cv2.imwrite(BOSS_PHOTO, frame)
-    log_info("Boss face registered successfully")
-    return "Your face has been registered Boss. Security is active."
+    x, y, w, h = best_faces[0]
+    embedding  = _get_embedding(best_frame, x, y, w, h)
+
+    data = {
+        "registered_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "embedding":     embedding.tolist()
+    }
+    with open(BOSS_DATA_FILE, "w") as f:
+        json.dump(data, f)
+
+    log_info("Boss face registered!")
+    speak("Your face is registered Boss! Security is now active.")
+    return "Face registered Boss! Say 'security check' to verify."
 
 
-def recognize_face(timeout_sec: int = 15) -> str:
-    """
-    Attempt to recognize Boss's face from webcam.
-    Returns welcome message or unknown person.
-    """
-    if not os.path.exists(BOSS_PHOTO):
-        return "Boss face not registered yet. Please say 'register face' first Boss."
+def recognize_face(timeout_sec=15):
+    if not os.path.exists(BOSS_DATA_FILE):
+        return "Face not registered Boss. Say 'register face' first."
 
     try:
-        boss_image = face_recognition.load_image_file(BOSS_PHOTO)
-        boss_encodings = face_recognition.face_encodings(boss_image)
-        if not boss_encodings:
-            return "Boss photo does not have a detectable face. Please re-register Boss."
-        boss_encoding = boss_encodings[0]
+        with open(BOSS_DATA_FILE) as f:
+            saved = json.load(f)
+        saved_emb = saved.get("embedding", [])
+        if not saved_emb:
+            return "Face data corrupted Boss. Say 'register face' again."
     except Exception as e:
-        log_error(f"Face load error: {e}")
-        return "Error loading boss face data Boss."
+        return f"Could not load face data Boss: {e}"
 
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
@@ -77,36 +143,57 @@ def recognize_face(timeout_sec: int = 15) -> str:
         if not ret:
             break
 
-        # Resize for faster processing
-        small = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
-        rgb = small[:, :, ::-1]
+        faces, _ = _detect_faces(frame)
 
-        locations = face_recognition.face_locations(rgb)
-        encodings = face_recognition.face_encodings(rgb, locations)
+        if len(faces) > 0:
+            for (x, y, w, h) in faces:
+                emb         = _get_embedding(frame, x, y, w, h)
+                match, conf = _compare(saved_emb, emb)
 
-        for encoding in encodings:
-            results = face_recognition.compare_faces([boss_encoding], encoding, tolerance=0.5)
-            distance = face_recognition.face_distance([boss_encoding], encoding)[0]
+                if match and conf > 55:
+                    cap.release()
+                    cv2.destroyAllWindows()
+                    log_info(f"Boss recognized! {conf}%")
+                    return f"Welcome Boss! Identity confirmed ({conf:.0f}% match)."
 
-            if results[0]:
-                cap.release()
-                cv2.destroyAllWindows()
-                confidence = round((1 - distance) * 100, 1)
-                log_info(f"Boss recognized with {confidence}% confidence")
-                return f"Welcome Boss! Identity confirmed ({confidence}% confidence)."
+                color = (0, 255, 0) if match else (0, 0, 255)
+                label = f"BOSS {conf:.0f}%" if match else f"Unknown {conf:.0f}%"
+                cv2.rectangle(frame, (x, y), (x+w, y+h), color, 2)
+                cv2.putText(frame, label, (x, y-10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, 2)
+        else:
+            cv2.putText(frame, "Show your face Boss...", (10, 30),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 165, 0), 2)
 
-        # Draw face boxes
-        for (top, right, bottom, left) in locations:
-            top *= 2; right *= 2; bottom *= 2; left *= 2
-            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 255), 2)
+        remaining = int(timeout_sec - (time.time() - start))
+        cv2.putText(frame, f"Time: {remaining}s",
+                    (10, frame.shape[0]-10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 200, 200), 1)
 
-        cv2.putText(frame, "Scanning...", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
         cv2.imshow("Cracka Security", frame)
-
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
 
     cap.release()
     cv2.destroyAllWindows()
-    log_error("Unknown person detected or timeout")
-    return "Access denied. Unknown person detected Boss."
+    return "Access denied Boss. Face not recognized."
+
+
+def delete_face_data():
+    deleted = []
+    for f in [BOSS_PHOTO, BOSS_DATA_FILE]:
+        if os.path.exists(f):
+            os.remove(f)
+            deleted.append(f)
+    return "Face data deleted Boss." if deleted else "No face data Boss."
+
+
+def get_face_status():
+    if os.path.exists(BOSS_DATA_FILE):
+        try:
+            with open(BOSS_DATA_FILE) as f:
+                data = json.load(f)
+            return f"Face registered Boss! Date: {data.get('registered_at', 'unknown')}"
+        except Exception:
+            pass
+    return "Face not registered Boss. Say 'register face'."
