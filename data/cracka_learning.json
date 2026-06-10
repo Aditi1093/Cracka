@@ -1,6 +1,6 @@
 {
   "commands": {
-    "search": 1,
+    "search": 2,
     "weather pune": 1,
     "jarvis": 4,
     "open d whatsapp": 12,
@@ -82,7 +82,7 @@
     "press enter": 2,
     "mute": 2,
     "unmute": 2,
-    "take screenshot": 4,
+    "take screenshot": 5,
     "manager": 2,
     "task manager": 2,
     "new": 8,
@@ -223,14 +223,14 @@
     "bhul jao": 2,
     "\u0a05\u0a71\u0a1b\u0a3e \u0a05\u0a71\u0a1b\u0a3e \u0a1c\u0a40": 2,
     "show profile": 2,
-    "play": 1,
+    "play": 4,
     "\u0a35\u0a3e\u0a39\u0a3f\u0a17\u0a41\u0a30\u0a42 \u0a1c\u0a40 \u0a15\u0a3e \u0a16\u0a3e\u0a32\u0a38\u0a3e \u0a35\u0a3e\u0a39\u0a3f\u0a17\u0a41\u0a30\u0a42 \u0a1c\u0a40 \u0a38\u0a24\u0a3f\u0a28\u0a3e\u0a2e \u0a35\u0a3e\u0a39\u0a3f\u0a17\u0a41\u0a30\u0a42 \u0a38\u0a24\u0a3f\u0a28\u0a3e\u0a2e \u0a35\u0a3e\u0a39\u0a3f\u0a17\u0a41\u0a30\u0a42 \u0a38\u0a24\u0a3f\u0a28\u0a3e\u0a2e \u0a35\u0a3e\u0a39\u0a3f\u0a17\u0a41\u0a30\u0a42 \u0a38\u0a24\u0a3f\u0a28\u0a3e\u0a2e \u0a35\u0a3e\u0a39\u0a3f\u0a17\u0a41\u0a30\u0a42 \u0a38\u0a24\u0a3f\u0a28\u0a3e\u0a2e \u0a35\u0a3e\u0a39\u0a3f\u0a17\u0a41\u0a30\u0a42": 2,
-    "detect my mood": 1,
+    "detect my mood": 2,
     "washroom mein uske": 2,
     "\u0a2c\u0a71\u0a1a\u0a3f\u0a06\u0a02 \u0a28\u0a42\u0a70 \u0a38\u0a3c\u0a3e\u0a07\u0a26 \u0a24\u0a42\u0a70 \u0a28\u0a39\u0a40\u0a02 \u0a15\u0a30\u0a28\u0a40 \u0a1a\u0a3e\u0a39\u0a40\u0a26\u0a40 \u0a39\u0a4b\u0a23\u0a40 \u0a1a\u0a3e\u0a39\u0a40\u0a26\u0a40 \u0a38\u0a40": 2,
     "stop": 2,
     "\u0a2e\u0a41\u0a71\u0a15\u0a23\u0a40": 2,
-    "open chrome": 2,
+    "open chrome": 4,
     "\u0a15\u0a70\u0a2a\u0a28\u0a40 \u0a26\u0a40 \u0a28\u0a4c\u0a15\u0a30\u0a40 \u0a15\u0a40\u0a24\u0a40": 2,
     "open gmail": 2,
     "\u0a2e\u0a48\u0a02 \u0a07\u0a38 \u0a2c\u0a39\u0a41\u0a24 \u0a35\u0a27\u0a40\u0a06": 2,
@@ -243,7 +243,7 @@
     "\u09ad\u09af\u09bc\u09c7\u09b8": 2,
     "tell me joke": 2,
     "tell me another joke": 2,
-    "youtube": 2,
+    "youtube": 4,
     "what are you": 2,
     "\u0a38\u0a24\u0a3f \u0a38\u0a3c\u0a4d\u0a30\u0a40 \u0a05\u0a15\u0a3e\u0a32 \u0a26\u0a4b\u0a38\u0a24\u0a4b \u0a2d\u0a3e\u0a08 \u0a2d\u0a3e\u0a08 \u0a2d\u0a3e\u0a08 \u0a2d\u0a3e\u0a08 \u0a2d\u0a3e\u0a08 \u0a39\u0a4b": 2,
     "show config": 2,
@@ -269,7 +269,19 @@
     "i hate u": 2,
     "i mis u": 2,
     "register": 2,
-    "mr face": 2
+    "mr face": 2,
+    "happy birthday": 10,
+    "shuddh bhasha bolo": 2,
+    "shiv pratima": 2,
+    "happy birthday ka happy birthday to you happy birthday to you": 2,
+    "happy birthday cracker": 2,
+    "kaka ke naam aaj ki raat": 2,
+    "thank you thank you thank you": 2,
+    "archana": 2,
+    "hello mobile": 2,
+    "news": 1,
+    "weather": 1,
+    "show diary": 1
   },
   "daily": {
     "2026-04-27": {
@@ -619,7 +631,32 @@
       "register": 2,
       "register face": 10,
       "mr face": 2
+    },
+    "2026-05-31": {
+      "happy birthday": 10,
+      "shuddh bhasha bolo": 2,
+      "shiv pratima": 2,
+      "happy birthday ka happy birthday to you happy birthday to you": 2,
+      "happy birthday cracker": 2,
+      "kaka ke naam aaj ki raat": 2,
+      "thank you thank you thank you": 2,
+      "archana": 2,
+      "hello mobile": 2
+    },
+    "2026-06-08": {
+      "take screenshot": 1,
+      "search": 1,
+      "news": 1,
+      "weather": 1,
+      "play": 2,
+      "detect my mood": 1,
+      "show diary": 1
+    },
+    "2026-06-09": {
+      "play": 1,
+      "youtube": 2,
+      "open chrome": 2
     }
   },
-  "total": 815
+  "total": 854
 }
