@@ -67,6 +67,16 @@ HINDI_MAP = {
     "config dikhao": "show config",
 }
 
+# FIX: Sort HINDI_MAP entries by phrase length (longest first).
+# Without this, a short phrase like "band karo" (→ shutdown) could match
+# INSIDE a longer phrase like "music band karo" (→ stop music) BEFORE the
+# longer, more specific phrase gets a chance — giving the wrong command.
+# Sorting longest-first ensures specific phrases are checked before
+# their shorter sub-phrases.
+_HINDI_MAP_SORTED = sorted(
+    HINDI_MAP.items(), key=lambda item: len(item[0]), reverse=True
+)
+
 MODE_COMMANDS = {
     "hindi mode": "hindi", "english mode": "english",
     "auto mode": "auto", "marathi mode": "marathi",
@@ -86,11 +96,18 @@ def _is_hinglish(text: str) -> bool:
 
 def _translate_to_english(text: str) -> str:
     t = text.lower().strip()
+
+    # Exact match first
     if t in HINDI_MAP:
         return HINDI_MAP[t]
-    for phrase, english in HINDI_MAP.items():
+
+    # FIX: use the LENGTH-SORTED list so longer/more specific phrases
+    # (e.g. "music band karo") are checked BEFORE their shorter
+    # sub-phrases (e.g. "band karo").
+    for phrase, english in _HINDI_MAP_SORTED:
         if phrase in t:
             return t.replace(phrase, english).strip()
+
     return t
 
 

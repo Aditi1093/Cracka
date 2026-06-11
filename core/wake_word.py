@@ -52,6 +52,9 @@ def _listen_vosk() -> bool:
     Vosk offline STT se wake word detect karo.
     Exact 'cracka' match karta hai — no internet needed.
     """
+    pa     = None
+    stream = None
+
     try:
         import pyaudio
         from vosk import Model, KaldiRecognizer
@@ -95,9 +98,6 @@ def _listen_vosk() -> bool:
 
                     for word in WAKE_WORDS:
                         if word in text:
-                            stream.stop_stream()
-                            stream.close()
-                            pa.terminate()
                             return True
             else:
                 # Partial result check (faster response)
@@ -108,14 +108,8 @@ def _listen_vosk() -> bool:
                     for word in WAKE_WORDS:
                         if word in text and len(text) >= len(word):
                             print(f"\033[90m[Heard partial]: {text}\033[0m")
-                            stream.stop_stream()
-                            stream.close()
-                            pa.terminate()
                             return True
 
-        stream.stop_stream()
-        stream.close()
-        pa.terminate()
         return False
 
     except ImportError:
@@ -124,6 +118,22 @@ def _listen_vosk() -> bool:
     except Exception as e:
         print(f"[WakeWord] Vosk error: {e} — using Google STT")
         return _listen_google()
+    finally:
+        # FIX: ALWAYS close stream + pyaudio, no matter how the
+        # function exits (return True, return False, or exception).
+        # Without this, repeated errors leak microphone handles and
+        # eventually cause "device busy" crashes.
+        if stream is not None:
+            try:
+                stream.stop_stream()
+                stream.close()
+            except Exception:
+                pass
+        if pa is not None:
+            try:
+                pa.terminate()
+            except Exception:
+                pass
 
 
 def _listen_google() -> bool:

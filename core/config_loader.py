@@ -19,23 +19,32 @@ import os
 
 CONFIG_FILE = "data/config.json"
 
+# FIX: use None as "not loaded yet" sentinel.
+# An empty dict {} is a valid loaded config and should NOT trigger reload.
 _cache = None
 
 
 def _load() -> dict:
     global _cache
-    if _cache:
+
+    # FIX: check "is not None" instead of truthiness
+    # (empty dict {} is falsy but IS a valid cached value)
+    if _cache is not None:
         return _cache
+
     if not os.path.exists(CONFIG_FILE):
         print(f"[Config] {CONFIG_FILE} not found — using defaults.")
-        return {}
+        _cache = {}
+        return _cache
+
     try:
         with open(CONFIG_FILE, "r", encoding="utf-8") as f:
             _cache = json.load(f)
         return _cache
     except Exception as e:
         print(f"[Config] Load error: {e}")
-        return {}
+        _cache = {}
+        return _cache
 
 
 class Config:
@@ -65,8 +74,17 @@ class Config:
         if section not in data:
             data[section] = {}
         data[section][key] = value
-        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2)
+
+        # FIX: ensure data/ folder exists before writing
+        os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)
+
+        try:
+            with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"[Config] Save error: {e}")
+            return
+
         global _cache
         _cache = data
 

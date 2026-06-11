@@ -281,7 +281,14 @@
     "hello mobile": 2,
     "news": 1,
     "weather": 1,
-    "show diary": 1
+    "show diary": 1,
+    "ek password": 2,
+    "check password": 6,
+    "virus total check google.com": 5,
+    "virustotal check google.com": 3,
+    "password": 2,
+    "list installed software": 2,
+    "check vulnerabilities for chrome": 2
   },
   "daily": {
     "2026-04-27": {
@@ -656,7 +663,16 @@
       "play": 1,
       "youtube": 2,
       "open chrome": 2
+    },
+    "2026-06-11": {
+      "ek password": 2,
+      "check password": 6,
+      "virus total check google.com": 5,
+      "virustotal check google.com": 3,
+      "password": 2,
+      "list installed software": 2,
+      "check vulnerabilities for chrome": 2
     }
   },
-  "total": 854
+  "total": 876
 }

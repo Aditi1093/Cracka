@@ -22,6 +22,7 @@ OLLAMA_MODEL  = "phi3"
 GROQ_MODEL    = "llama3-8b-8192"
 GROQ_API_URL  = "https://api.groq.com/openai/v1/chat/completions"
 MAX_HISTORY   = 20   # Last N messages kept for context
+CREDENTIALS_FILE = "data/credentials.json"
 
 # ── Conversation history (in-memory) ─────────────────────────────────────────
 _history: list = []
@@ -113,14 +114,41 @@ def _ask_ollama() -> str:
         return ""
 
 
+def _get_groq_api_key() -> str:
+    """
+    Get Groq API key.
+    Priority:
+      1. Environment variable GROQ_API_KEY
+      2. data/credentials.json -> "groq_api_key"
+    """
+    # 1. Try environment variable first
+    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    if api_key:
+        return api_key
+
+    # 2. Fallback: read from credentials.json
+    try:
+        if os.path.exists(CREDENTIALS_FILE):
+            with open(CREDENTIALS_FILE, "r", encoding="utf-8") as f:
+                creds = json.load(f)
+            api_key = creds.get("groq_api_key", "").strip()
+            if api_key:
+                return api_key
+    except Exception as e:
+        log_error(f"[ChatEngine] Could not read {CREDENTIALS_FILE}: {e}")
+
+    return ""
+
+
 def _ask_groq(question: str) -> str:
     """
     Query Groq cloud API — very fast, free tier available.
     Get API key: https://console.groq.com
     Set env: GROQ_API_KEY=your_key_here
+    OR add it to data/credentials.json as "groq_api_key"
     """
     try:
-        api_key = os.environ.get("GROQ_API_KEY", "").strip()
+        api_key = _get_groq_api_key()
         if not api_key:
             return ""
 

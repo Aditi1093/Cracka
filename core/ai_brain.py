@@ -42,6 +42,10 @@ def process(command: str, session=None) -> str:
     if not command:
         return ""
 
+    # FIX: mic often hears "virustotal" as two words "virus total"
+    # Normalize so VirusTotal commands are detected correctly
+    command = command.replace("virus total", "virustotal")
+
     learn_command(command)
     emotion = detect_emotion(command)
 
@@ -223,7 +227,7 @@ def process(command: str, session=None) -> str:
             search_youtube(command)
             return "Searching on YouTube Boss."
 
-        elif "search" in command or "google" in command:
+        elif ("search" in command or "google" in command) and "virustotal" not in command:
             from utils.internet import search_google
             search_google(command)
             return "Searching on Google Boss."
@@ -644,6 +648,57 @@ def process(command: str, session=None) -> str:
             from security_scan.vulnerability_scanner import scan_vulnerabilities
             url = command.replace("scan website", "").strip()
             return scan_vulnerabilities(url) if url else "Please say the website URL Boss."
+
+        # ── THREAT INTELLIGENCE (VirusTotal + HaveIBeenPwned) ────────────────
+        elif "virustotal" in command and "ip" in command:
+            from security_scan.threat_intelligence import check_ip_virustotal
+            target = command.replace("virustotal check ip", "") \
+                             .replace("virustotal", "").replace("ip", "").strip()
+            return check_ip_virustotal(target) if target else "Please say the IP address Boss."
+
+        elif "virustotal" in command and "file" in command:
+            from security_scan.threat_intelligence import check_file_virustotal
+            path = command.replace("virustotal check file", "") \
+                           .replace("virustotal", "").replace("file", "").strip()
+            return check_file_virustotal(path) if path else "Please say the file path Boss."
+
+        elif "virustotal" in command:
+            from security_scan.threat_intelligence import check_url_virustotal
+            target = command.replace("virustotal check", "") \
+                             .replace("virustotal", "").strip()
+            return check_url_virustotal(target) if target else "Please say the URL Boss."
+
+        elif "check password" in command or "password breach" in command or \
+             "is my password safe" in command:
+            from security_scan.threat_intelligence import check_password_voice
+            return check_password_voice()
+
+        elif "email breach" in command or "check email breach" in command:
+            from security_scan.threat_intelligence import check_email_pwned
+            email = command.replace("check email breach", "") \
+                            .replace("email breach", "").strip()
+            return check_email_pwned(email) if email else "Please say the email address Boss."
+
+        elif "threat check" in command:
+            from security_scan.threat_intelligence import quick_threat_check
+            target = command.replace("threat check", "").strip()
+            return quick_threat_check(target) if target else "Please say a URL, IP, or email Boss."
+
+        # ── CVE SCANNER ───────────────────────────────────────────────────────
+        elif "list installed software" in command or "installed programs" in command or \
+             "what software do i have" in command:
+            from security_scan.cve_scanner import list_installed_software
+            return list_installed_software()
+
+        elif "scan my software" in command or "scan installed" in command or \
+             "scan my programs" in command or "software vulnerabilities" in command:
+            from security_scan.cve_scanner import scan_installed_software
+            return scan_installed_software()
+
+        elif ("vulnerabilities for" in command or "vulnerability for" in command or
+              "cve check" in command or "cve scan" in command or "check cve" in command):
+            from security_scan.cve_scanner import check_software_cve
+            return check_software_cve(command)
 
         elif "show my ip" in command or "my ip" in command:
             from security_scan.network_analyzer import get_local_ip, get_public_ip
