@@ -1,0 +1,23 @@
+[
+  {
+    "time": "2026-06-12 12:20:48",
+    "type": "MASS_FILE_MODIFICATION",
+    "path": "C:\\Users\\patil\\Desktop\\test_ransomware_sim\\document_7.txt",
+    "details": "15 files changed in 10s (0/5 sampled files show high entropy — likely encrypted).",
+    "auto_response": "Could not identify the responsible process for auto-suspend."
+  },
+  {
+    "time": "2026-06-12 12:41:03",
+    "type": "MASS_FILE_MODIFICATION",
+    "path": "C:\\Users\\patil\\Desktop\\test_ransomware_sim\\document_6.txt",
+    "details": "15 files changed in 10s (0/5 sampled files show high entropy — likely encrypted).",
+    "auto_response": "Could not identify the responsible process for auto-suspend."
+  },
+  {
+    "time": "2026-06-12 12:44:03",
+    "type": "MASS_FILE_MODIFICATION",
+    "path": "C:\\Users\\patil\\Desktop\\test_ransomware_sim\\document_14.txt",
+    "details": "15 files changed in 10s (0/5 sampled files show high entropy — likely encrypted).",
+    "auto_response": "Could not identify the responsible process for auto-suspend."
+  }
+]

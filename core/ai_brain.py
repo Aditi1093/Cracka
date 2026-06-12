@@ -8,6 +8,7 @@
 """
 
 import re
+import os
 from core.config_loader import config
 from core.voice_engine  import speak
 from core.logger        import log_info, log_error
@@ -45,6 +46,27 @@ def process(command: str, session=None) -> str:
     # FIX: mic often hears "virustotal" as two words "virus total"
     # Normalize so VirusTotal commands are detected correctly
     command = command.replace("virus total", "virustotal")
+
+    # FIX: mic commonly mis-hears ransomware commands. Normalize the
+    # most common mishears BEFORE routing so they match correctly.
+    #   "stop X" → mic drops the 's' → "top X"
+    #   "ransomware" → mic hears "somewhere" / "handsome wear" / "handsome where"
+    RANSOMWARE_MISHEARS = {
+        "top ransomware protection":      "stop ransomware protection",
+        "top ransomware":                 "stop ransomware",
+        "somewhere status":               "ransomware status",
+        "somewhere protection":           "ransomware protection",
+        "handsome wear status":           "ransomware status",
+        "handsome where status":          "ransomware status",
+        "handsome wear protection":       "ransomware protection",
+        "is somewhere protection on":     "is ransomware protection on",
+        "somewhere alerts":               "ransomware alerts",
+        "somewhere log":                  "ransomware log",
+    }
+    for wrong, right in RANSOMWARE_MISHEARS.items():
+        if wrong in command:
+            command = command.replace(wrong, right)
+            break
 
     learn_command(command)
     emotion = detect_emotion(command)
@@ -124,6 +146,10 @@ def process(command: str, session=None) -> str:
             return "You can try Boss, but I am just a program. I cannot be hurt. I am here to serve you!"
 
         # ── CONFIG SETTINGS ──────────────────────────────────────────────────
+        elif "ai status" in command or "which ai" in command:
+            from brain.chat_engine import get_ai_status
+            return get_ai_status()
+
         elif "show config" in command or "settings dikhao" in command:
             return _show_config_summary()
 
@@ -649,6 +675,70 @@ def process(command: str, session=None) -> str:
             url = command.replace("scan website", "").strip()
             return scan_vulnerabilities(url) if url else "Please say the website URL Boss."
 
+        # ── RANSOMWARE PROTECTION ─────────────────────────────────────────────
+        elif "start ransomware" in command or "ransomware protection on" in command or \
+             "enable ransomware" in command:
+            from security_scan import ransomware_detector as rd
+            return rd.start_monitor(
+                callback=lambda alert: speak(
+                    f"Boss! Ransomware activity detected on "
+                    f"{os.path.basename(alert['path'])}! "
+                    f"{alert.get('auto_response', '')}"
+                )
+            )
+
+        elif "stop ransomware" in command or "ransomware protection off" in command or \
+             "disable ransomware" in command:
+            from security_scan import ransomware_detector as rd
+            return rd.stop_monitor()
+
+        elif "ransomware status" in command or "is ransomware protection on" in command:
+            from security_scan import ransomware_detector as rd
+            return rd.get_status()
+
+        elif "ransomware alerts" in command or "ransomware log" in command or \
+             "show ransomware" in command:
+            from security_scan import ransomware_detector as rd
+            return rd.get_recent_alerts()
+
+        elif "canary" in command or "ransomware trap" in command or \
+             "setup decoy" in command:
+            from security_scan import ransomware_detector as rd
+            return rd.create_canary_files()
+
+        # ── WI-FI SECURITY ────────────────────────────────────────────────────
+        elif "wifi security" in command or "wi-fi security" in command or \
+             "scan wifi" in command or "check wifi" in command:
+            from security_scan.wifi_security import check_wifi_security
+            return check_wifi_security()
+
+        elif "wifi password for" in command or "wifi password" in command or \
+             "wi-fi password" in command:
+            from security_scan.wifi_security import show_wifi_password
+            network = command
+            for phrase in ["wifi password for", "wi-fi password for",
+                            "show wifi password", "wifi password", "wi-fi password"]:
+                network = network.replace(phrase, "")
+            return show_wifi_password(network.strip())
+
+        elif "list wifi" in command or "saved wifi" in command or \
+             "saved networks" in command:
+            from security_scan.wifi_security import list_saved_wifi_networks
+            return list_saved_wifi_networks()
+
+        # ── PASSWORD TOOL ─────────────────────────────────────────────────────
+        elif "generate password" in command or "create a strong password" in command or \
+             "generate passphrase" in command or "make a memorable password" in command or \
+             "create password" in command:
+            from security_scan.password_tool import generate_password_voice
+            return generate_password_voice(command)
+
+        elif "how strong is my password" in command or \
+             "check password strength" in command or \
+             "password strength" in command:
+            from security_scan.password_tool import check_password_strength_voice
+            return check_password_strength_voice()
+
         # ── THREAT INTELLIGENCE (VirusTotal + HaveIBeenPwned) ────────────────
         elif "virustotal" in command and "ip" in command:
             from security_scan.threat_intelligence import check_ip_virustotal
@@ -683,6 +773,11 @@ def process(command: str, session=None) -> str:
             from security_scan.threat_intelligence import quick_threat_check
             target = command.replace("threat check", "").strip()
             return quick_threat_check(target) if target else "Please say a URL, IP, or email Boss."
+
+        elif "check domain" in command or "domain reputation" in command:
+            from security_scan.threat_intelligence import check_domain_virustotal
+            domain = command.replace("check domain", "").replace("domain reputation", "").strip()
+            return check_domain_virustotal(domain) if domain else "Please say the domain Boss."
 
         # ── CVE SCANNER ───────────────────────────────────────────────────────
         elif "list installed software" in command or "installed programs" in command or \
@@ -726,6 +821,23 @@ def process(command: str, session=None) -> str:
         elif "stop network monitor" in command:
             from security_scan.network_monitor import stop_monitor
             return stop_monitor()
+
+        # ── OFFICE CREATOR (PPT / Word / Excel) ──────────────────────────────
+        elif any(w in command for w in [
+            "presentation", "make ppt", "create ppt", "make slides",
+            "create slides", "powerpoint",
+        ]) or any(w in command for w in [
+            "word document", "word doc", "write report", "create report",
+            "write essay", "create essay", "make resume", "create resume",
+            "make cv", "write letter", "create proposal", "write document",
+        ]) or any(w in command for w in [
+            "create excel", "make excel", "excel sheet",
+            "make spreadsheet", "create tracker", "make tracker",
+            "make budget", "create budget", "create schedule",
+            "make timetable",
+        ]):
+            from utils.office_creator import handle_office_command
+            return handle_office_command(command)
 
         # ── FACE SECURITY ─────────────────────────────────────────────────────
         elif "security check" in command or "face check" in command:

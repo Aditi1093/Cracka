@@ -56,6 +56,16 @@ try:
 except Exception as e:
     log_error(f"Network monitor setup skipped: {e}")
 
+# ── Optional: connect ransomware detector to GUI ───────────────────────────────
+try:
+    from security_scan.ransomware_detector import set_gui as rd_set_gui
+    from security_scan.ransomware_detector import auto_start_if_enabled as rd_auto_start
+    rd_set_gui(gui)
+    rd_auto_start()
+    log_info("Ransomware detector connected to GUI")
+except Exception as e:
+    log_error(f"Ransomware detector setup skipped: {e}")
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # ASSISTANT LOOP

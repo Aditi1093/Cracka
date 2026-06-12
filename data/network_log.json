@@ -1448,5 +1448,244 @@
     "alerts": [
       "Unknown process 'net_updater32.exe' connected to external 15.197.193.114"
     ]
+  },
+  {
+    "time": "2026-06-11 22:59:45",
+    "severity": "MEDIUM",
+    "process": "msedgewebview2.exe",
+    "pid": 17912,
+    "remote_ip": "2603:1063:10:102::365:7ea3",
+    "hostname": "2603:1063:10:102::365:7ea3",
+    "remote_port": 443,
+    "local_port": 62202,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' on external IP 2603:1063:10:102::365:7ea3"
+    ]
+  },
+  {
+    "time": "2026-06-11 22:59:45",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2603:1046:c04:1404::2",
+    "hostname": "2603:1046:c04:1404::2",
+    "remote_port": 443,
+    "local_port": 5904,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' on external IP 2603:1046:c04:1404::2"
+    ]
+  },
+  {
+    "time": "2026-06-11 22:59:45",
+    "severity": "MEDIUM",
+    "process": "claude.exe",
+    "pid": 7788,
+    "remote_ip": "18.97.36.18",
+    "hostname": "ec2-18-97-36-18.compute-1.amazonaws.com",
+    "remote_port": 443,
+    "local_port": 50192,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'claude.exe' on external IP 18.97.36.18"
+    ]
+  },
+  {
+    "time": "2026-06-11 22:59:46",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2401:4900:c08e:1fff::74",
+    "hostname": "2401:4900:c08e:1fff::74",
+    "remote_port": 53,
+    "local_port": 10693,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' on external IP 2401:4900:c08e:1fff::74"
+    ]
+  },
+  {
+    "time": "2026-06-11 22:59:51",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "52.168.117.174",
+    "hostname": "52.168.117.174",
+    "remote_port": 443,
+    "local_port": 35384,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' on external IP 52.168.117.174"
+    ]
+  },
+  {
+    "time": "2026-06-11 22:59:51",
+    "severity": "MEDIUM",
+    "process": "msedgewebview2.exe",
+    "pid": 17912,
+    "remote_ip": "2603:1040:401:e::1f1",
+    "hostname": "2603:1040:401:e::1f1",
+    "remote_port": 443,
+    "local_port": 18568,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'msedgewebview2.exe' on external IP 2603:1040:401:e::1f1"
+    ]
+  },
+  {
+    "time": "2026-06-11 22:59:51",
+    "severity": "MEDIUM",
+    "process": "ms-teams.exe",
+    "pid": 8020,
+    "remote_ip": "2603:1040:a03:9::fa",
+    "hostname": "2603:1040:a03:9::fa",
+    "remote_port": 443,
+    "local_port": 15044,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'ms-teams.exe' on external IP 2603:1040:a03:9::fa"
+    ]
+  },
+  {
+    "time": "2026-06-11 22:59:51",
+    "severity": "MEDIUM",
+    "process": "hp.hpx.exe",
+    "pid": 19736,
+    "remote_ip": "44.246.217.94",
+    "hostname": "ec2-44-246-217-94.us-west-2.compute.amazonaws.com",
+    "remote_port": 443,
+    "local_port": 15288,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'hp.hpx.exe' on external IP 44.246.217.94"
+    ]
+  },
+  {
+    "time": "2026-06-11 22:59:52",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2401:4900:c08e:1fff::74",
+    "hostname": "2401:4900:c08e:1fff::74",
+    "remote_port": 53,
+    "local_port": 52566,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' on external IP 2401:4900:c08e:1fff::74"
+    ]
+  },
+  {
+    "time": "2026-06-11 22:59:54",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2401:4900:c08e:1fff::74",
+    "hostname": "2401:4900:c08e:1fff::74",
+    "remote_port": 53,
+    "local_port": 25715,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' on external IP 2401:4900:c08e:1fff::74"
+    ]
+  },
+  {
+    "time": "2026-06-11 22:59:55",
+    "severity": "HIGH",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2401:4900:c08e:1fff::74",
+    "hostname": "2401:4900:c08e:1fff::74",
+    "remote_port": 53,
+    "local_port": 5900,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Dangerous local port 5900: VNC (remote desktop)",
+      "Unknown process 'system idle process' on external IP 2401:4900:c08e:1fff::74"
+    ]
+  },
+  {
+    "time": "2026-06-11 23:00:00",
+    "severity": "MEDIUM",
+    "process": "filecoauth.exe",
+    "pid": 22880,
+    "remote_ip": "52.182.143.208",
+    "hostname": "52.182.143.208",
+    "remote_port": 443,
+    "local_port": 2417,
+    "status": "ESTABLISHED",
+    "alerts": [
+      "Unknown process 'filecoauth.exe' on external IP 52.182.143.208"
+    ]
+  },
+  {
+    "time": "2026-06-11 23:00:01",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2401:4900:c08e:1fff::74",
+    "hostname": "2401:4900:c08e:1fff::74",
+    "remote_port": 53,
+    "local_port": 34567,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' on external IP 2401:4900:c08e:1fff::74"
+    ]
+  },
+  {
+    "time": "2026-06-11 23:00:01",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2603:1046:c04:1404::2",
+    "hostname": "2603:1046:c04:1404::2",
+    "remote_port": 443,
+    "local_port": 5902,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' on external IP 2603:1046:c04:1404::2"
+    ]
+  },
+  {
+    "time": "2026-06-11 23:00:02",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2401:4900:c08e:1fff::74",
+    "hostname": "2401:4900:c08e:1fff::74",
+    "remote_port": 53,
+    "local_port": 38567,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' on external IP 2401:4900:c08e:1fff::74"
+    ]
+  },
+  {
+    "time": "2026-06-11 23:00:04",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2401:4900:c08e:1fff::74",
+    "hostname": "2401:4900:c08e:1fff::74",
+    "remote_port": 53,
+    "local_port": 64909,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' on external IP 2401:4900:c08e:1fff::74"
+    ]
+  },
+  {
+    "time": "2026-06-11 23:00:05",
+    "severity": "MEDIUM",
+    "process": "system idle process",
+    "pid": 0,
+    "remote_ip": "2401:4900:c08e:1fff::74",
+    "hostname": "2401:4900:c08e:1fff::74",
+    "remote_port": 53,
+    "local_port": 17038,
+    "status": "TIME_WAIT",
+    "alerts": [
+      "Unknown process 'system idle process' on external IP 2401:4900:c08e:1fff::74"
+    ]
   }
 ]
