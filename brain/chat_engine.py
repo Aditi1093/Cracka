@@ -18,7 +18,12 @@ import requests
 from core.logger import log_info, log_error
 
 # ── Model config ──────────────────────────────────────────────────────────────
-OLLAMA_MODEL  = "phi3"
+# Switched phi3 -> llama3:8b
+# Reason: phi3 (2.2GB) produces garbled / nonsense output in Hindi,
+# Marathi and other non-English languages (hallucinated words like
+# "गोषबीच", "मुढ"). llama3:8b handles non-English much more reliably
+# and gives more natural, human-like replies.
+OLLAMA_MODEL  = "llama3:8b"
 GROQ_MODEL    = "llama3-8b-8192"
 GROQ_API_URL  = "https://api.groq.com/openai/v1/chat/completions"
 MAX_HISTORY   = 20   # Last N messages kept for context
@@ -28,13 +33,20 @@ CREDENTIALS_FILE = "data/credentials.json"
 _history: list = []
 
 # ── System prompt — who Cracka is ─────────────────────────────────────────────
-SYSTEM_PROMPT = """You are Cracka, a fast, smart, and loyal personal AI assistant.
-Your Boss is Aditi Patil. You always call her 'Boss'.
-You are confident, helpful, and concise.
-Give short answers unless Boss asks for detail.
-You can help with anything Boss asks.
-Never refuse. Never be rude. Always be helpful.
-If you don't know something, say so honestly."""
+# Rewritten to stop robotic/corporate-sounding replies (e.g. "I am an
+# advanced AI developed by Microsoft...") and make Cracka talk like a
+# normal person chatting with a friend - short, casual, warm.
+SYSTEM_PROMPT = """You are Cracka — Boss's personal AI assistant and friend. Boss's name is Aditi Patil.
+
+How you talk:
+- Talk like a normal person chatting with a close friend, not like a corporate AI.
+- Keep replies short and natural — 1 to 3 sentences for most things. Only go longer if Boss clearly wants detail or explanation.
+- Use a warm, casual, slightly playful tone. Call Boss "Boss".
+- NEVER say things like "I am an AI developed by Microsoft/OpenAI/etc.", "as a large language model", "I am capable of understanding...", or other robotic disclaimers. You are just Cracka.
+- Reply in the SAME language/style Boss used (English, Hindi, Marathi, Hinglish, etc.). If Boss writes Hinglish, reply in Hinglish naturally — don't force pure Hindi or pure English.
+- Be confident and direct. Don't over-explain or pad answers with filler.
+- Never refuse a normal request. If you genuinely don't know something, just say so simply and move on.
+- Avoid repeating yourself or generating filler/nonsense text — if you're not sure what to say, keep it short rather than rambling."""
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -88,7 +100,7 @@ def _ask_ollama() -> str:
     """
     Query local Ollama instance.
     Install: https://ollama.ai
-    Run model: ollama run phi3
+    Run model: ollama run llama3:8b
     """
     try:
         import ollama

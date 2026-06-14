@@ -143,18 +143,43 @@ def clear_memory() -> str:
 # Keywords that signal Boss is sharing personal info
 _AUTO_SAVE_PATTERNS = {
     "my name is":      "boss_name",
-    "i am":            "boss_identity",
     "i live in":       "boss_location",
     "i work at":       "boss_workplace",
     "i study at":      "boss_college",
     "my email is":     "boss_email",
     "my number is":    "boss_phone",
-    "i like":          "boss_preference",
-    "i love":          "boss_interest",
-    "i hate":          "boss_dislike",
     "my birthday is":  "boss_birthday",
-    "remind me":       "boss_reminder_hint",
+    # FIX: "i am", "i like", "i love", "i hate" were REMOVED from here.
+    # They're too broad — "i am tired", "i am hungry", "i love you Cracka"
+    # would constantly overwrite boss_identity/boss_interest/boss_dislike
+    # with junk, AND clash with the emotion easter-eggs in ai_brain.py
+    # (e.g. "i love you" already gets a special reply there).
+    # "i like"/"i love" are handled separately below with extra checks.
+    # "remind me" was REMOVED — reminder_system.py already handles this;
+    # saving it again here just duplicates data with no benefit.
 }
+
+# FIX: separate, MORE CAREFUL patterns for preferences. These only save
+# if the value is long enough and isn't just "you"/"cracka" (which would
+# mean the sentence was about Cracka, not a real preference/fact).
+_PREFERENCE_PATTERNS = {
+    "i like":  "boss_preference",
+    "i love":  "boss_interest",
+    "i hate":  "boss_dislike",
+}
+
+# Common short words that mean "i am ___" is NOT an identity fact
+# (e.g. "i am tired" / "i am bored" — just a mood, not who Boss IS)
+_NON_IDENTITY_STATES = {
+    "fine", "good", "okay", "ok", "happy", "sad", "tired", "bored",
+    "hungry", "thirsty", "busy", "free", "here", "back", "ready",
+    "done", "sorry", "kidding", "joking", "tired", "sleepy", "angry",
+    "fine boss", "great", "not feeling well", "feeling tired",
+}
+
+# If the saved "value" starts with these, it's about Cracka, not a fact
+# about Boss — skip saving (avoids clashing with "i love/hate you" easter eggs)
+_SKIP_IF_STARTS_WITH = ("you", "cracka", "ya", "ye")
 
 
 def auto_detect_and_save(command: str):
@@ -162,19 +187,43 @@ def auto_detect_and_save(command: str):
     Automatically detect and save personal info from commands.
     e.g. "my name is Aditi" → saves boss_name = "Aditi"
     Called silently from main.py — no response returned.
+
+    FIX: now skips "i am ___ " when ___ is just a mood/state word
+    (tired, hungry, bored, etc.), and skips "i like/love/hate ___"
+    when ___ refers to Cracka ("you", "you cracka") — these are
+    handled by the emotion easter-eggs in ai_brain.py instead.
     """
     if not command:
         return
 
     cmd = command.lower().strip()
 
+    # 1. Core identity patterns (name, location, work, etc.) — safe, specific
     for pattern, key in _AUTO_SAVE_PATTERNS.items():
         if pattern in cmd:
-            # Extract the value after the pattern
             value = cmd.split(pattern, 1)[-1].strip()
             if value and len(value) > 1:
                 remember(key, value)
-            break
+            return  # one fact per command is enough
+
+    # 2. "i am ___" — only save if it looks like a real identity fact,
+    #    not a temporary mood/state.
+    if cmd.startswith("i am "):
+        value = cmd[len("i am "):].strip()
+        if (value and len(value) > 2
+                and value not in _NON_IDENTITY_STATES
+                and not value.startswith(_SKIP_IF_STARTS_WITH)):
+            remember("boss_identity", value)
+            return
+
+    # 3. Preferences — "i like/love/hate ___", skip if about Cracka
+    for pattern, key in _PREFERENCE_PATTERNS.items():
+        if pattern in cmd:
+            value = cmd.split(pattern, 1)[-1].strip()
+            if (value and len(value) > 1
+                    and not value.startswith(_SKIP_IF_STARTS_WITH)):
+                remember(key, value)
+            return
 
 
 # ─────────────────────────────────────────────────────────────────────────────

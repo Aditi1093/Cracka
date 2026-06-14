@@ -15,6 +15,7 @@ from core.logger        import log_info, log_error
 from intelligence.emotion_ai     import detect_emotion
 from intelligence.learning_system import learn_command, most_used
 from brain.chat_engine  import ask_ai
+from utils.translator   import wrap_response
 
 # ── Load config values once at startup ───────────────────────────────────────
 BOSS_NAME   = config.get("assistant", "boss_name", default="Boss")
@@ -31,12 +32,31 @@ F_NETWORK  = config.feature("network_monitor")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# MAIN PROCESS FUNCTION
+# PUBLIC ENTRY POINT
 # Called from main.py with every voice command Boss gives.
 # session = SessionMemory object (can be None in tests)
 # Returns: response string (spoken + shown in GUI)
+#
+# NOTE: this is a thin wrapper around _process_internal(). It applies
+# any active language preference (set via "talk to me in hindi" etc.,
+# see utils/translator.py) to the FINAL response before returning —
+# so EVERY feature (security scans, CVE reports, jokes, weather,
+# everything) becomes multilingual through this single hook, without
+# touching the dozens of individual return statements below.
 # ─────────────────────────────────────────────────────────────────────────────
 def process(command: str, session=None) -> str:
+    """Route voice command to the correct module, then apply any
+    active output-language preference to the result."""
+    result = _process_internal(command, session)
+    return wrap_response(result)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# INTERNAL PROCESS FUNCTION — all routing logic lives here (unchanged
+# from before, aside from the new translator-related branches and the
+# rename from process() -> _process_internal()).
+# ─────────────────────────────────────────────────────────────────────────────
+def _process_internal(command: str, session=None) -> str:
     """Route voice command to the correct module and return response."""
 
     command = command.lower().strip()
@@ -258,9 +278,9 @@ def process(command: str, session=None) -> str:
             search_google(command)
             return "Searching on Google Boss."
 
-        elif "news" in command:
-            from utils.news_fetcher import get_news
-            return get_news()
+        elif _is_news_command(command):
+            from utils.news_fetcher import cracka_news_handler
+            return cracka_news_handler(command)
 
         elif "weather" in command:
             from utils.weather import get_weather
@@ -281,7 +301,35 @@ def process(command: str, session=None) -> str:
             from utils.calculator import calculate
             return calculate(command)
 
-        elif "translate" in command:
+        # ── TRANSLATOR — LANGUAGE PREFERENCE & TOOLS ─────────────────────────
+        # NOTE: these MUST come before the generic "translate" check below,
+        # since phrases like "reply in hindi" don't contain "translate"
+        # but "talk to me in hindi" etc. need to be caught first.
+        elif "talk to me in" in command or "reply in" in command or \
+             "switch to" in command or "speak in" in command:
+            from utils.translator import set_preferred_language
+            return set_preferred_language(command)
+
+        elif "stop translating" in command or "speak english only" in command or \
+             "reset language" in command or "talk to me normally" in command:
+            from utils.translator import clear_preferred_language
+            return clear_preferred_language()
+
+        elif "what languages" in command or "list languages" in command or \
+             "languages do you support" in command or "languages can you translate" in command:
+            from utils.translator import list_supported_languages
+            return list_supported_languages()
+
+        elif "what language is this" in command or "detect language" in command:
+            from utils.translator import detect_language
+            text = command.replace("what language is this", "") \
+                           .replace("detect language", "").strip()
+            return detect_language(text) if text else "Please give me some text Boss."
+
+        # ── TRANSLATE (generic + "what does X mean" reverse phrasing) ────────
+        elif "translate" in command or \
+             ("what does" in command and "mean" in command) or \
+             "how do you say" in command:
             from utils.translator import translate_text
             return translate_text(command)
 
@@ -904,6 +952,11 @@ def process(command: str, session=None) -> str:
 # ─────────────────────────────────────────────────────────────────────────────
 # HELPERS
 # ─────────────────────────────────────────────────────────────────────────────
+def _is_news_command(command: str) -> bool:
+    from utils.news_fetcher import NEWS_TRIGGERS
+    return any(t in command for t in NEWS_TRIGGERS)
+
+
 def _listen_for(prompt: str) -> str:
     """Ask Boss a question via voice and wait for reply."""
     from core.listener import listen_for_text

@@ -47,7 +47,7 @@ def _compare(saved_emb, current_emb):
         a2 = a2 / (np.linalg.norm(a2) + 1e-8)
         dist  = float(np.linalg.norm(a1 - a2))
         conf  = max(0.0, round((1.0 - dist) * 100, 1))
-        match = dist < 0.35
+        match = dist < 0.55
         return match, conf
     except Exception as e:
         log_error(f"Compare error: {e}")
@@ -150,7 +150,7 @@ def recognize_face(timeout_sec=15):
                 emb         = _get_embedding(frame, x, y, w, h)
                 match, conf = _compare(saved_emb, emb)
 
-                if match and conf > 55:
+                if match and conf > 30:
                     cap.release()
                     cv2.destroyAllWindows()
                     log_info(f"Boss recognized! {conf}%")

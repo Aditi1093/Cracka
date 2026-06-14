@@ -1,201 +1,124 @@
 {
-  "2026-06-11": [
+  "2026-06-14": [
     {
-      "time": "13:17:17",
-      "mood": "neutral",
-      "trigger": "ek password"
+      "time": "12:21:25",
+      "mood": "happy",
+      "trigger": "how do you say good morning in spanish"
     },
     {
-      "time": "13:18:43",
-      "mood": "neutral",
-      "trigger": "check password"
+      "time": "12:21:37",
+      "mood": "happy",
+      "trigger": "you say good morning in japanese"
     },
     {
-      "time": "13:19:19",
-      "mood": "neutral",
-      "trigger": "virus total check google.com"
+      "time": "12:21:55",
+      "mood": "happy",
+      "trigger": "how do you say good morning in japanese"
     },
     {
-      "time": "13:22:47",
-      "mood": "neutral",
-      "trigger": "virus total check google.com"
+      "time": "12:22:16",
+      "mood": "happy",
+      "trigger": "how do you say good morning in russian"
     },
     {
-      "time": "13:34:09",
+      "time": "12:22:34",
       "mood": "neutral",
-      "trigger": "password"
+      "trigger": "what languages do you support"
     },
     {
-      "time": "13:35:22",
+      "time": "12:23:21",
       "mood": "neutral",
-      "trigger": "check password"
+      "trigger": "talk to me in hindi"
     },
     {
-      "time": "13:35:49",
+      "time": "12:24:21",
       "mood": "neutral",
-      "trigger": "virus total check google.com"
+      "trigger": "kya hai"
     },
     {
-      "time": "13:37:18",
+      "time": "12:25:07",
       "mood": "neutral",
-      "trigger": "check password"
+      "trigger": "cyber security kya hai"
     },
     {
-      "time": "13:37:38",
+      "time": "12:25:43",
       "mood": "neutral",
-      "trigger": "virus total check google.com"
+      "trigger": "translating"
     },
     {
-      "time": "13:54:36",
+      "time": "12:25:58",
       "mood": "neutral",
-      "trigger": "list installed software"
+      "trigger": "stop translating"
     },
     {
-      "time": "13:57:24",
+      "time": "12:29:57",
       "mood": "neutral",
-      "trigger": "check vulnerabilities for chrome"
+      "trigger": "talk to me in hindi"
     },
     {
-      "time": "22:43:56",
+      "time": "12:40:58",
       "mood": "neutral",
-      "trigger": "make presentation on ai"
+      "trigger": "languages do you support"
     },
     {
-      "time": "22:44:59",
-      "mood": "neutral",
-      "trigger": "make slides on cloud computing"
+      "time": "12:41:54",
+      "mood": "happy",
+      "trigger": "how do you say good morning in thai"
     },
     {
-      "time": "22:46:14",
-      "mood": "neutral",
-      "trigger": "make resume"
+      "time": "12:42:25",
+      "mood": "happy",
+      "trigger": "how do you say good morning in punjabi"
     },
     {
-      "time": "22:47:12",
+      "time": "12:43:20",
       "mood": "neutral",
-      "trigger": "create report on cyber security"
+      "trigger": "in hindi"
     },
     {
-      "time": "22:47:48",
+      "time": "12:43:55",
       "mood": "neutral",
-      "trigger": "opening"
+      "trigger": "to me in hindi"
     },
     {
-      "time": "22:49:46",
+      "time": "12:44:14",
       "mood": "neutral",
-      "trigger": "write word document on cyber security"
+      "trigger": "to me in hindi"
     },
     {
-      "time": "22:50:48",
+      "time": "13:00:37",
       "mood": "neutral",
-      "trigger": "write word document on cyber security 6 pages"
+      "trigger": "save profile"
     },
     {
-      "time": "22:51:20",
+      "time": "13:10:55",
       "mood": "neutral",
-      "trigger": "create excel sheet for daily schedule"
+      "trigger": "save profile"
     },
     {
-      "time": "22:54:41",
+      "time": "13:12:27",
       "mood": "neutral",
-      "trigger": "state tracker for student marks"
+      "trigger": "to profile"
     },
     {
-      "time": "22:56:09",
+      "time": "13:12:54",
       "mood": "neutral",
-      "trigger": "create tracker for student marks"
+      "trigger": "to profile"
     },
     {
-      "time": "22:59:57",
+      "time": "13:13:21",
       "mood": "neutral",
-      "trigger": "create tracker for finance"
-    }
-  ],
-  "2026-06-12": [
-    {
-      "time": "12:18:45",
-      "mood": "neutral",
-      "trigger": "star transform where protection"
+      "trigger": "stop profile"
     },
     {
-      "time": "12:20:20",
+      "time": "13:13:42",
       "mood": "neutral",
-      "trigger": "start ransomware protection"
+      "trigger": "top profile"
     },
     {
-      "time": "12:22:33",
+      "time": "13:14:03",
       "mood": "neutral",
-      "trigger": "tata transformer protection"
-    },
-    {
-      "time": "12:23:49",
-      "mood": "neutral",
-      "trigger": "star transformer protection"
-    },
-    {
-      "time": "12:25:10",
-      "mood": "neutral",
-      "trigger": "somewhere protection"
-    },
-    {
-      "time": "12:27:03",
-      "mood": "neutral",
-      "trigger": "star transform where protection"
-    },
-    {
-      "time": "12:28:55",
-      "mood": "neutral",
-      "trigger": "start ransomware protection"
-    },
-    {
-      "time": "12:29:16",
-      "mood": "neutral",
-      "trigger": "top ransomware protection"
-    },
-    {
-      "time": "12:29:31",
-      "mood": "neutral",
-      "trigger": "top ransomware protection"
-    },
-    {
-      "time": "12:29:46",
-      "mood": "neutral",
-      "trigger": "top ransomware protection"
-    },
-    {
-      "time": "12:30:17",
-      "mood": "neutral",
-      "trigger": "ransomware protection"
-    },
-    {
-      "time": "12:31:18",
-      "mood": "neutral",
-      "trigger": "top ransomware protection"
-    },
-    {
-      "time": "12:31:33",
-      "mood": "neutral",
-      "trigger": "stop ransomware protection"
-    },
-    {
-      "time": "12:32:15",
-      "mood": "neutral",
-      "trigger": "somewhere status"
-    },
-    {
-      "time": "12:33:14",
-      "mood": "neutral",
-      "trigger": "song"
-    },
-    {
-      "time": "12:34:27",
-      "mood": "neutral",
-      "trigger": "handsome wear status"
-    },
-    {
-      "time": "12:40:43",
-      "mood": "neutral",
-      "trigger": "start ransomware protection"
+      "trigger": "show profile"
     }
   ]
 }

@@ -27,11 +27,51 @@ All files save to Desktop automatically and open in respective apps.
 
 import os
 import re
+import json
 import subprocess
 from datetime import datetime
-from brain.chat_engine import ask_ai
-from core.logger import log_info, log_error
-from core.voice_engine import speak
+
+try:
+    from core.logger import log_info, log_error
+except:
+    def log_info(x): print(f"[INFO] {x}")
+    def log_error(x): print(f"[ERROR] {x}")
+
+try:
+    from core.voice_engine import speak
+except:
+    def speak(x): print(f"Cracka: {x}")
+
+
+# ── AI Content Generator — Ollama first, then cloud ──────────────────────────
+def _ask_ai_for_content(prompt: str) -> str:
+    """
+    Get detailed content. Priority: Ollama (2000 tokens) → Gemini → Groq
+    """
+    try:
+        import requests as _req
+        _req.get("http://localhost:11434/api/tags", timeout=2)
+        import ollama
+        response = ollama.chat(
+            model="phi3",
+            messages=[{"role": "user", "content": prompt}],
+            options={"temperature": 0.7, "num_predict": 2000}
+        )
+        result = response["message"]["content"].strip()
+        if result and len(result) > 50:
+            log_info("[Office] Ollama content ready ✅")
+            return result
+    except Exception:
+        log_error("[Office] Ollama unavailable, trying cloud AI...")
+    try:
+        from brain.chat_engine import ask_ai
+        result = _ask_ai_for_content(prompt)
+        if result:
+            log_info("[Office] Cloud AI content ready ✅")
+        return result
+    except Exception as e:
+        log_error(f"[Office] All AI failed: {e}")
+        return ""
 
 DESKTOP = os.path.join(os.path.expanduser("~"), "Desktop")
 os.makedirs(DESKTOP, exist_ok=True)
@@ -60,72 +100,163 @@ def _open_file(filepath: str):
 # POWERPOINT CREATOR
 # ══════════════════════════════════════════════════════════════
 
+def _fetch_slide_content(topic: str, slide_title: str, slide_purpose: str) -> list:
+    """
+    Fetch REAL detailed content for one slide from AI.
+    Returns list of 4-5 detailed bullet points.
+    """
+    prompt = f"""You are an expert on "{topic}".
+Write exactly 5 detailed bullet points for a presentation slide titled "{slide_title}".
+
+Purpose of this slide: {slide_purpose}
+
+Rules:
+- Each point must be 15-25 words with REAL facts, numbers, examples
+- No vague statements like "important" or "useful" — be specific
+- Use actual data, statistics, real examples about {topic}
+- Do NOT add bullet symbols, numbers, or formatting
+- Write ONE point per line, nothing else
+
+Write 5 points now:"""
+
+    raw = _ask_ai_for_content(prompt)
+    if not raw:
+        return [f"Key insight about {slide_title}", f"{topic} related information",
+                "Supporting details and examples", "Practical applications",
+                "Impact and significance"]
+
+    lines = [l.strip() for l in raw.strip().split('\n')
+             if l.strip() and len(l.strip()) > 15
+             and not l.strip().startswith(('#', '*', '-', '•'))]
+    # Remove numbering if AI added it
+    cleaned = []
+    for l in lines:
+        import re as _re
+        l = _re.sub(r'^\d+[.)\s]+', '', l).strip()
+        if l:
+            cleaned.append(l)
+
+    return cleaned[:5] if cleaned else [f"Detailed information about {slide_title} in {topic}"]
+
+
+def _build_slide_structure(topic: str) -> list:
+    """
+    Define slide structure — title + purpose for each slide.
+    AI will fill real content for each one separately.
+    """
+    return [
+        {
+            "title": topic.title(),
+            "purpose": "Title slide — just show the topic name, subtitle, and date",
+            "is_title": True,
+        },
+        {
+            "title": "What is " + topic.title() + "?",
+            "purpose": f"Define {topic} clearly. Include origin, full form if any, core meaning, who uses it, and why it exists.",
+        },
+        {
+            "title": "History & Evolution",
+            "purpose": f"When was {topic} invented/started? Key milestones, how it evolved over years, important dates and events.",
+        },
+        {
+            "title": "How It Works",
+            "purpose": f"Step by step working mechanism of {topic}. Technical process explained simply with real examples.",
+        },
+        {
+            "title": "Key Features & Components",
+            "purpose": f"Main components, features, or parts of {topic}. What makes it unique and powerful.",
+        },
+        {
+            "title": "Real-World Applications",
+            "purpose": f"Where is {topic} actually used today? Name specific industries, companies, products that use it.",
+        },
+        {
+            "title": "Statistics & Facts",
+            "purpose": f"Real numbers, market size, adoption rates, growth percentage, research findings about {topic}.",
+        },
+        {
+            "title": "Benefits & Advantages",
+            "purpose": f"Concrete benefits of {topic} with specific examples. What problems does it solve?",
+        },
+        {
+            "title": "Challenges & Limitations",
+            "purpose": f"Real problems and limitations of {topic}. What are current unsolved issues?",
+        },
+        {
+            "title": "Future of " + topic.title(),
+            "purpose": f"Where is {topic} headed? Upcoming trends, research directions, predictions for next 5-10 years.",
+        },
+        {
+            "title": "Conclusion",
+            "purpose": f"Summary of key takeaways about {topic}. Why it matters, what to remember.",
+        },
+    ]
+
+
 def create_presentation(command: str) -> str:
     """
-    Create a PowerPoint presentation on any topic.
+    Create a detailed PowerPoint — each slide gets its own AI content fetch.
     Voice: "make presentation on AI" / "create ppt on climate change"
     """
-    # Extract topic
     topic = command.lower()
     for phrase in [
         "make presentation on", "create presentation on",
         "make ppt on", "create ppt on", "make slides on",
         "create slides on", "presentation on", "ppt on",
         "slides on", "make a presentation on", "create a presentation on",
-        "make a ppt on", "presentation about", "slides about",
+        "make a ppt on", "presentation about", "slides about", "ppt about",
     ]:
         topic = topic.replace(phrase, "").strip()
-
     topic = topic.strip(" .")
+
     if not topic:
         return "Please tell me the topic Boss. Like 'make presentation on AI'."
 
-    speak(f"Creating presentation on {topic} Boss. Give me a moment.")
-    log_info(f"Creating PPT: {topic}")
+    speak(f"Creating detailed presentation on {topic} Boss. Fetching content for each slide — give me 1-2 minutes.")
+    log_info(f"[PPT] Starting smart content generation for: {topic}")
 
-    # Generate content with AI
-    prompt = f"""Create a professional PowerPoint presentation on: {topic}
+    # Get slide structure
+    slide_structure = _build_slide_structure(topic)
 
-Generate exactly 7 slides with this JSON structure (respond ONLY with JSON, no other text):
+    # Build slides with AI content
+    slides = []
+    for i, slide_info in enumerate(slide_structure):
+        slide_title = slide_info["title"]
 
-{{
-  "title": "Main presentation title",
-  "subtitle": "Subtitle or tagline",
-  "slides": [
-    {{
-      "slide_number": 1,
-      "title": "Slide Title",
-      "content": ["Point 1", "Point 2", "Point 3", "Point 4"],
-      "notes": "Speaker notes for this slide"
-    }}
-  ]
-}}
+        if slide_info.get("is_title"):
+            # Title slide — no AI call needed
+            slides.append({
+                "slide_number": i + 1,
+                "title": topic.title(),
+                "content": [
+                    f"A Comprehensive Overview",
+                    f"Created by Cracka AI",
+                    datetime.now().strftime("%B %Y"),
+                ],
+                "is_title": True,
+                "notes": f"Welcome to this presentation on {topic}."
+            })
+            continue
 
-Slides should be:
-1. Title slide
-2. Introduction / Overview
-3. Main concept 1
-4. Main concept 2
-5. Key statistics or facts
-6. Applications / Use cases
-7. Conclusion / Summary
+        log_info(f"[PPT] Fetching content for slide {i+1}: {slide_title}")
+        speak(f"Generating slide {i+1} — {slide_title}.")
 
-Make content informative and professional."""
+        points = _fetch_slide_content(topic, slide_title, slide_info["purpose"])
 
-    try:
-        raw = ask_ai(prompt)
-        # Extract JSON
-        json_match = re.search(r'\{.*\}', raw, re.DOTALL)
-        if json_match:
-            import json
-            data = json.loads(json_match.group())
-        else:
-            raise ValueError("No JSON found in response")
-    except Exception as e:
-        log_error(f"AI content generation error: {e}")
-        # Fallback content
-        data = _get_fallback_ppt_content(topic)
+        slides.append({
+            "slide_number": i + 1,
+            "title": slide_title,
+            "content": points,
+            "notes": slide_info["purpose"],
+        })
 
+    data = {
+        "title": f"{topic.title()} — Complete Guide",
+        "subtitle": f"An In-Depth Exploration | {datetime.now().strftime('%B %Y')}",
+        "slides": slides,
+    }
+
+    speak(f"All {len(slides)} slides ready! Building PowerPoint now Boss.")
     return _build_pptx(data, topic)
 
 
@@ -446,22 +577,12 @@ def _build_pptx(data: dict, topic: str) -> str:
 # ══════════════════════════════════════════════════════════════
 
 def create_word_document(command: str) -> str:
-    """
-    Create a Word document on any topic.
-    Voice: "write word document on cybersecurity"
-           "create report on machine learning"
-           "make resume" / "write essay on AI"
-    """
+    """Create detailed Word doc with section-by-section AI content."""
     cmd_lower = command.lower()
-
-    # Detect document type
     is_resume   = "resume" in cmd_lower or "cv" in cmd_lower
     is_report   = "report" in cmd_lower
     is_essay    = "essay" in cmd_lower
-    is_letter   = "letter" in cmd_lower
-    is_proposal = "proposal" in cmd_lower
 
-    # Extract topic
     topic = cmd_lower
     for phrase in [
         "write word document on", "create word document on",
@@ -470,62 +591,74 @@ def create_word_document(command: str) -> str:
         "write essay on", "create essay on",
         "write a report on", "create a report on",
         "make a report on", "word document on",
-        "write letter to", "create proposal for",
         "make resume", "create resume", "write resume",
         "make cv", "create cv",
     ]:
         topic = topic.replace(phrase, "").strip()
-
     topic = topic.strip(" .")
 
     if is_resume:
         return _create_resume()
-
     if not topic:
         return "Please tell me the topic Boss. Like 'write report on cybersecurity'."
 
-    speak(f"Writing document on {topic} Boss.")
-    log_info(f"Creating Word doc: {topic}")
+    speak(f"Writing detailed document on {topic} Boss. Fetching each section from AI.")
+    log_info(f"[Word] Creating document on: {topic}")
 
-    # Generate content with AI
+    # Define sections based on doc type
     if is_report:
-        prompt = f"""Write a professional report on: {topic}
-
-Structure:
-1. Executive Summary (2-3 sentences)
-2. Introduction (1 paragraph)
-3. Main Content (3-4 sections with headings)
-4. Key Findings (bullet points)
-5. Recommendations (3-5 points)
-6. Conclusion (1 paragraph)
-
-Make it professional and informative. About 500-700 words total."""
+        sections = [
+            ("Executive Summary",     f"Write a 3-4 sentence executive summary of a professional report on {topic}. Be specific and informative."),
+            ("Introduction",          f"Write 2 detailed paragraphs introducing {topic}, its importance, and the scope of this report. Include real context."),
+            ("Background & Overview", f"Write detailed background of {topic} — history, how it started, current state with real facts and timeline."),
+            ("Key Concepts",          f"Define and explain 5 important technical terms or concepts related to {topic}. Use real definitions."),
+            ("Main Analysis: Core Aspects",    f"Write 2 detailed paragraphs analyzing the most important aspect of {topic} with facts and examples."),
+            ("Main Analysis: Technical Details", f"Write 2 detailed paragraphs about the technical/functional details of {topic} with specific examples."),
+            ("Main Analysis: Industry Impact",   f"Write 2 detailed paragraphs about how {topic} impacts the industry with real statistics and case studies."),
+            ("Key Findings",          f"List 5 specific, data-backed findings about {topic}. Each finding should have a real fact or statistic."),
+            ("Recommendations",       f"Give 4 specific, actionable recommendations related to {topic} with reasoning for each."),
+            ("Conclusion",            f"Write 2 paragraphs concluding the report on {topic} with key takeaways and future outlook."),
+        ]
     elif is_essay:
-        prompt = f"""Write a well-structured essay on: {topic}
-
-Structure:
-- Introduction (hook + thesis)
-- Body paragraph 1 (main argument)
-- Body paragraph 2 (supporting evidence)
-- Body paragraph 3 (counter-argument and rebuttal)
-- Conclusion (summary + broader implications)
-
-About 400-600 words."""
+        sections = [
+            ("Introduction",          f"Write a strong essay introduction on {topic} — hook sentence, background context, and clear thesis statement. 2 paragraphs."),
+            ("Historical Background", f"Write 2 paragraphs on the history and evolution of {topic} with real dates and events."),
+            ("Argument 1: Core Significance", f"Write 2 paragraphs arguing the most important point about {topic} with evidence and examples."),
+            ("Argument 2: Applications & Impact", f"Write 2 paragraphs about real-world applications and impact of {topic} with specific cases."),
+            ("Argument 3: Future Implications", f"Write 2 paragraphs about future implications and potential of {topic} with research-backed points."),
+            ("Counter Arguments",     f"Write 1 paragraph addressing opposing views on {topic} and rebutting them with evidence."),
+            ("Conclusion",            f"Write 2 paragraphs concluding the essay on {topic} — summarize arguments and give broader implications."),
+        ]
     else:
-        prompt = f"""Write a comprehensive document on: {topic}
+        sections = [
+            ("Overview",              f"Write a detailed introduction paragraph about {topic}. What it is, why it matters."),
+            ("Definition & Explanation", f"Write 2 paragraphs clearly defining and explaining {topic} with real examples."),
+            ("History & Background",  f"How did {topic} evolve? Write 1-2 paragraphs with real historical facts."),
+            ("Core Components",       f"List and explain 5 main components or elements of {topic} with specific details."),
+            ("How It Works",          f"Write a step-by-step explanation of how {topic} works with real technical details."),
+            ("Applications",          f"Describe 3 specific real-world applications of {topic} with actual examples and use cases."),
+            ("Benefits",              f"List 4 concrete benefits of {topic} with specific examples and data."),
+            ("Challenges",            f"List 3 real challenges or limitations of {topic} and how they are being addressed."),
+            ("Future Trends",         f"Write 1-2 paragraphs on the future of {topic} — upcoming developments and predictions."),
+            ("Conclusion",            f"Write a conclusion summarizing the key points about {topic}."),
+        ]
 
-Include:
-- Introduction
-- Key concepts and definitions
-- Main topics (3-4 sections)
-- Important points in each section
-- Conclusion
+    # Build full document content section by section
+    full_content = ""
+    for section_title, section_prompt in sections:
+        log_info(f"[Word] Fetching section: {section_title}")
+        speak(f"Writing section — {section_title}.")
+        raw = _ask_ai_for_content(section_prompt)
+        if raw:
+            full_content += f"# {section_title}\n{raw}\n\n"
+        else:
+            full_content += f"# {section_title}\n[Content unavailable — check AI connection]\n\n"
 
-Professional tone. About 400-600 words."""
+    if not full_content:
+        full_content = f"# {topic.title()}\n\nContent generation failed. Please check your AI connection."
 
-    content = ask_ai(prompt)
-
-    return _build_docx(content, topic, is_report, is_essay)
+    speak(f"All sections ready! Building Word document now Boss.")
+    return _build_docx(full_content, topic, is_report, is_essay)
 
 
 def _create_resume() -> str:
@@ -1296,7 +1429,7 @@ ROW1: val1, val2, val3, val4, val5, val6
 ROW2: val1, val2, val3, val4, val5, val6
 ROW3: val1, val2, val3, val4, val5, val6"""
 
-        ai_response = ask_ai(prompt)
+        ai_response = _ask_ai_for_content(prompt)
 
         columns  = []
         rows     = []

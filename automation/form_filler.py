@@ -241,27 +241,32 @@ def show_profile() -> str:
 
 def save_profile_voice() -> str:
     """Voice-guided profile setup."""
-    from core.listener import listen_for_text
+    from core.listener import listen
 
-    speak("Let's set up your profile Boss. I'll ask you a few questions.")
+    speak("Let's set up your profile Boss. I'll ask you a few questions. Take your time.")
 
     fields = [
-        ("personal", "full_name",  "What is your full name Boss?"),
-        ("personal", "email",      "What is your email address Boss?"),
-        ("personal", "phone",      "What is your mobile number Boss?"),
-        ("personal", "dob",        "What is your date of birth? Say like 15 August 2000."),
-        ("personal", "city",       "Which city are you from Boss?"),
-        ("personal", "state",      "Which state Boss?"),
-        ("personal", "pincode",    "What is your area pincode Boss?"),
+        ("personal", "full_name",   "What is your full name Boss?"),
+        ("personal", "email",       "What is your email address Boss?"),
+        ("personal", "phone",       "What is your mobile number Boss?"),
+        ("personal", "dob",         "What is your date of birth? Say like 15 August 2000."),
+        ("personal", "city",        "Which city are you from Boss?"),
+        ("personal", "state",       "Which state Boss?"),
+        ("personal", "pincode",     "What is your area pincode Boss?"),
         ("college",  "college_name","What is your college name Boss?"),
-        ("college",  "course",     "What course are you studying Boss?"),
-        ("college",  "branch",     "What is your branch or department Boss?"),
+        ("college",  "course",      "What course are you studying Boss?"),
+        ("college",  "branch",      "What is your branch or department Boss?"),
     ]
 
     profiles = _load_profiles()
 
     for category, key, question in fields:
-        value = listen_for_text(question)
+        speak(question)
+        # FIX: increased timeout from default 8s to 15s — Boss needs time
+        # to think and speak, especially for longer answers like college name.
+        # phrase_limit increased to 20 words for long college names etc.
+        value = listen(timeout=15, phrase_limit=20)
+
         if value and value.strip():
             if category not in profiles:
                 profiles[category] = {}
@@ -275,12 +280,15 @@ def save_profile_voice() -> str:
                     profiles["personal"]["last_name"]  = " ".join(parts[1:])
 
             if key == "dob":
-                # Parse date
                 dob_parts = _parse_dob(value)
                 if dob_parts:
                     profiles["personal"]["dob_day"]   = dob_parts[0]
                     profiles["personal"]["dob_month"] = dob_parts[1]
                     profiles["personal"]["dob_year"]  = dob_parts[2]
+
+            speak(f"Got it Boss.")
+        else:
+            speak("I did not catch that Boss. Skipping.")
 
     _save_profiles(profiles)
     log_info("Profile saved via voice")
@@ -514,8 +522,13 @@ def fill_form_selenium(url: str = None) -> str:
 
                 # Handle different input types
                 if field_type == "radio":
-                    # Select matching radio
-                    if value.lower() in inp.get_attribute("value").lower():
+                    # FIX: inp.get_attribute("value") can be None for
+                    # radio buttons without a value attribute — calling
+                    # .lower() on None crashed (caught silently by the
+                    # outer except, so the radio was just skipped with
+                    # no clue why). Default to "" first.
+                    radio_value = inp.get_attribute("value") or ""
+                    if radio_value and value.lower() in radio_value.lower():
                         inp.click()
                         filled_count += 1
 
@@ -627,15 +640,43 @@ def fill_form_selenium(url: str = None) -> str:
 
 
 def _format_date_for_input(value: str) -> str:
-    """Convert date to YYYY-MM-DD format for HTML date inputs."""
-    # Try DD/MM/YYYY
+    """
+    Convert date to YYYY-MM-DD format for HTML <input type="date"> fields.
+
+    FIX 1: The original code only handled "DD/MM/YYYY" or already-correct
+    "YYYY-MM-DD". But save_profile_voice() asks Boss to say the DOB as
+    natural language ("15 August 2000"), which matched NEITHER pattern
+    and silently returned "" — so date-type fields were never filled.
+    Now falls back to _parse_dob() for natural-language dates.
+
+    FIX 2: The "already YYYY-MM-DD" branch returned `value` AS-IS without
+    zero-padding. "2000-8-5" would be returned unchanged, but HTML date
+    inputs require strict zero-padding ("2000-08-05") or they silently
+    reject the value. Now zero-pads month/day.
+    """
+    if not value:
+        return ""
+
+    value = value.strip()
+
+    # Try DD/MM/YYYY or DD-MM-YYYY
     m = re.match(r"(\d{1,2})[/\-](\d{1,2})[/\-](\d{4})", value)
     if m:
         return f"{m.group(3)}-{m.group(2).zfill(2)}-{m.group(1).zfill(2)}"
-    # Already YYYY-MM-DD
+
+    # Already YYYY-MM-DD-ish — FIX: zero-pad month/day
     m = re.match(r"(\d{4})-(\d{1,2})-(\d{1,2})", value)
     if m:
-        return value
+        return f"{m.group(1)}-{m.group(2).zfill(2)}-{m.group(3).zfill(2)}"
+
+    # FIX: fall back to natural-language parsing, e.g. "15 august 2000"
+    # — this is the exact format save_profile_voice() tells Boss to use!
+    parsed = _parse_dob(value)
+    if parsed:
+        day, month, year = parsed
+        if day and month and year:
+            return f"{year}-{str(month).zfill(2)}-{str(day).zfill(2)}"
+
     return ""
 
 
