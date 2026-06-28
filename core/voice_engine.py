@@ -71,7 +71,7 @@ EDGE_VOICE_MAP = {
     "ur":    "ur-PK-AsadNeural",        # Urdu (male)
     "ml":    "ml-IN-MidhunNeural",      # Malayalam (male)
     "kn":    "kn-IN-GaganNeural",       # Kannada (male)
-    "or":    "or-IN-SukantNeural",      # Odia (male)
+    "or":    "or-IN-SubhasiniNeural",   # Odia (no male voice available in edge-tts - using available female voice)
     "vi":    "vi-VN-NamMinhNeural",     # Vietnamese (male)
     "th":    "th-TH-NiwatNeural",       # Thai (male)
     "tr":    "tr-TR-AhmetNeural",       # Turkish (male)
@@ -244,6 +244,13 @@ def _speak_edge_tts_blocking(text: str, lang_code: str):
 
     Falls back to the persistent pyttsx3 engine (English voice
     attempting the text) if edge-tts fails (e.g. no internet).
+
+    NOTE: uses a PERSISTENT dedicated asyncio event loop (see
+    _get_edge_loop below) instead of asyncio.run(). Calling
+    asyncio.run() repeatedly from a background thread that also hosts
+    a persistent pyttsx3/COM engine can create/destroy event loops in
+    a way that destabilizes COM on Windows - same class of bug as the
+    original "new pyttsx3.init() per call" crash.
     """
     tmp = None
     try:
@@ -255,13 +262,12 @@ def _speak_edge_tts_blocking(text: str, lang_code: str):
         with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as f:
             tmp = f.name
 
-        # edge-tts is async - run it synchronously here since this
-        # whole function executes on the dedicated worker thread.
         async def _generate():
             communicate = edge_tts.Communicate(text, voice)
             await communicate.save(tmp)
 
-        asyncio.run(_generate())
+        loop = _get_edge_loop()
+        loop.run_until_complete(_generate())
 
         _play_mp3_via_windows(tmp)
 
@@ -278,6 +284,21 @@ def _speak_edge_tts_blocking(text: str, lang_code: str):
                 os.remove(tmp)
             except Exception:
                 pass
+
+
+_edge_loop = None
+
+
+def _get_edge_loop():
+    """
+    Returns a single persistent asyncio event loop, created once and
+    reused for all edge-tts calls on the worker thread. Avoids
+    creating/destroying loops repeatedly via asyncio.run().
+    """
+    global _edge_loop
+    if _edge_loop is None or _edge_loop.is_closed():
+        _edge_loop = asyncio.new_event_loop()
+    return _edge_loop
 
 
 def _play_mp3_via_windows(mp3_path: str):

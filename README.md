@@ -157,7 +157,6 @@ This project is currently in active development. Contributions, suggestions, and
 ## About the Developer
 
 Built as a dream project combining AI and Cybersecurity.
-Vision: To build a future tech company around intelligent, secure AI systems.
 
 ---
 
